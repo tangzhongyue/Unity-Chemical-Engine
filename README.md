@@ -15,3 +15,6 @@ SJTU Game Programming final
 
 * 另外一方面滴管正在做，截至目前拿起来之后按右键触发Dropper.cs中脚本，切换有水/无水状态，之后改来从试管里吸取液体
 
+
+
+P.S. 之前铜块进不了烧杯的BUG修复了
