@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System.Collections.Generic;
+
     public class UCE_Engine
     {
         public enum ChemicalType : int
@@ -38,12 +39,14 @@
 
         public static int env_pressure;
 
+        public const int SUPPORT_TYPE = 3;
         // This array stores the animation type when two chemical react
         // It should be changed when we need to have different reaction in different environment
-        public static int[,] reactionTable = new int[2, 2]
+        public static int[,] reactionTable = new int[SUPPORT_TYPE, SUPPORT_TYPE]
         {
-            {0, 3 },
-            {1, 0 },
+            {0, 3, 0 },
+            {1, 0, 0 },
+            {0, 0, 0 }
         };
 
         // TODO: 这个返回ReactionResult，储存反应后各种物质的剩余量会更好，但是还没想到怎么优雅的和其他模块交流:(
@@ -51,7 +54,12 @@
         {
             if (reactants.Count < 2)
             {
-                Debug.LogWarning("Insufficient reactants");
+                Debug.Log("Insufficient reactants");
+                return UCE_Animation.Animation.NoAnimation;
+            }
+            if ((int)reactants[0].type >= SUPPORT_TYPE || (int)reactants[1].type >= SUPPORT_TYPE)
+            {
+                Debug.Log("Reaction Not Supported Yet");
                 return UCE_Animation.Animation.NoAnimation;
             }
             return (UCE_Animation.Animation)reactionTable[(int)reactants[0].type, (int)reactants[1].type];

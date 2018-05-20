@@ -33,7 +33,7 @@
                     go.transform.localScale = new Vector3(go.transform.localScale.x, go.transform.localScale.y * 0.5f, go.transform.localScale.z);
                     break;
                 default:
-                    Debug.LogWarning("Unrealized or Unknown Animation Type");
+                    Debug.Log("Unrealized or Unknown Animation Type");
                     break;
             }
         }
