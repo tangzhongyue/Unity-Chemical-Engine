@@ -1,16 +1,19 @@
 ﻿namespace UCE
 {
     using UnityEngine;
-    using System.Collections;
     using VRTK;
 
     public class Dropper : VRTK_InteractableObject
     {
         public UCE_Engine.ChemicalType tubeType;
-        public bool inTube = false;
-        public Material material = null;
 
+        [HideInInspector]
+        public bool inTube = false;
+        [HideInInspector]
+        public Material material = null;
+        [HideInInspector]
         public bool inBeaker = false;
+        [HideInInspector]
         public GameObject beakerWaterGo;
 
         private bool hasWater = false;
