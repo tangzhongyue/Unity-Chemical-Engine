@@ -13,13 +13,19 @@
         public override void StartUsing(VRTK_InteractUse usingObject)
         {
             base.StartUsing(usingObject);
-            SetFire();
+            PutOutFire();
         }
 
-        void SetFire()
+        public void SetFire()
         {
             onFire = true;
             transform.Find("fire").gameObject.SetActive(true);
+        }
+
+        public void PutOutFire()
+        {
+            onFire = false;
+            transform.Find("fire").gameObject.SetActive(false);
         }
     }
 }
