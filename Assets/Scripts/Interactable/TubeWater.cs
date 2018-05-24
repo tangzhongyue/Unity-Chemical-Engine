@@ -12,8 +12,7 @@
             if (dropper)
             {
                 dropper.inTube = true;
-                dropper.tubeType = type;
-                dropper.material = GetComponent<Renderer>().material;
+                dropper.tubeWaterGo = gameObject;                
             }
         }
 
