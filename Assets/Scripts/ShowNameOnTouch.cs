@@ -33,7 +33,8 @@
 
 	    void OnTriggerEnter(Collider other)
         {
-            if (other.name.Contains("Controller"))
+            // Controller for Simulator, Side for HTC Vive
+            if (other.name.Contains("Controller") || other.name.Contains("Side"))
             {
                 // When using dropper, this function might be triggered twice in a row,
                 // so we need this to ensure the name text before can disapper properly
@@ -65,7 +66,12 @@
 
         void OnTriggerExit(Collider other)
         {
-            if (other.name.Contains("Controller"))
+            // Controller for Simulator, Side for HTC Vive
+            if (myObject == null)
+            {
+                return;
+            }
+            if (other.name.Contains("Controller") || other.name.Contains("Side"))
             {
                 show = false;
                 myObject.SetActive(false);
