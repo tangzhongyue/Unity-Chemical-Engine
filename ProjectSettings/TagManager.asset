@@ -12,6 +12,7 @@ TagManager:
   - Torso
   - OtherSaucers
   - BurnerLid
+  - NameText
   layers:
   - Default
   - TransparentFX

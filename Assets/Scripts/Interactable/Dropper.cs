@@ -10,26 +10,29 @@
         [HideInInspector]
         public bool inTube = false;
         [HideInInspector]
-        public Material material = null;
-        [HideInInspector]
         public bool inBeaker = false;
+        [HideInInspector]
+        public GameObject tubeWaterGo;
         [HideInInspector]
         public GameObject beakerWaterGo;
 
         private bool hasWater = false;
+        private string newName;
         private UCE_Engine.ChemicalType type;
-
+        
         public override void StartUsing(VRTK_InteractUse usingObject)
         {
             base.StartUsing(usingObject);
 
             if (inTube)
             {
+                hasWater = true;
+                newName = tubeWaterGo.GetComponent<ShowNameOnTouch>().showName;
+                type = tubeWaterGo.GetComponent<TubeWater>().type;
+
                 GameObject go = transform.Find("water").gameObject;
                 go.SetActive(true);
-                hasWater = true;
-                go.GetComponent<Renderer>().material = material;
-                type = tubeType;
+                go.GetComponent<Renderer>().material = tubeWaterGo.GetComponent<Renderer>().material;
             }
             else if (hasWater)
             {
@@ -48,6 +51,10 @@
                     chemical.chemicalAmount.type = type;
                     chemical.chemicalAmount.amount = 1;
                     beakerWaterGo.GetComponent<Renderer>().material = waterGo.GetComponent<Renderer>().material;
+
+                    ShowNameOnTouch snot = beakerWaterGo.GetComponent<ShowNameOnTouch>();
+                    snot.changeName(newName);
+
                     beakerWaterGo.SetActive(true);
                 }
             }
