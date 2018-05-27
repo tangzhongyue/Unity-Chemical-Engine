@@ -27,13 +27,15 @@
 
         public void SetFire()
         {
-            transform.Find("fire").gameObject.SetActive(true);
+            //transform.Find("fire").gameObject.SetActive(true);
+			GetComponent<Fire>().SetFire();
             onFire = true;
         }
 
         public void PutOutFire()
         {
-            transform.Find("fire").gameObject.SetActive(false);
+            //transform.Find("fire").gameObject.SetActive(false);
+			GetComponent<Fire>().PutOutFire();
             onFire = false;
         }
     }

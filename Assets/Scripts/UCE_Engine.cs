@@ -44,8 +44,8 @@
         // It should be changed when we need to have different reaction in different environment
         public static int[,] reactionTable = new int[SUPPORT_TYPE, SUPPORT_TYPE]
         {
-            {0, 3, 0 },
-            {1, 0, 0 },
+            {0, 4, 0 },
+            {2, 0, 0 },
             {0, 0, 0 }
         };
 

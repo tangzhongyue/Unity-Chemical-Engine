@@ -19,13 +19,15 @@
         public void SetFire()
         {
             onFire = true;
-            transform.Find("fire").gameObject.SetActive(true);
+			//transform.Find("fire").gameObject.SetActive(true);
+			GetComponent<Fire>().SetFire();
         }
 
         public void PutOutFire()
         {
             onFire = false;
-            transform.Find("fire").gameObject.SetActive(false);
+            //transform.Find("fire").gameObject.SetActive(false);
+			GetComponent<Fire>().PutOutFire();
         }
     }
 }
