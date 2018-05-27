@@ -8346,6 +8346,11 @@ Prefab:
       propertyPath: InitialModule.maxNumParticles
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 198280500405822670, guid: 352edbcc3a3d94cca9edb48bceddb3bd,
+        type: 2}
+      propertyPath: CustomDataModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 352edbcc3a3d94cca9edb48bceddb3bd, type: 2}
   m_IsPrefabParent: 0
