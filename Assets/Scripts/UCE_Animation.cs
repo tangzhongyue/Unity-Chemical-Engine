@@ -11,6 +11,7 @@
             SolidDisappear, SolidMelt,
             // Liquid
             LiquidReduce,
+			LiquidChangeColor,
             // Others
             // Create new partical system at go's position
             Explode, Fog,
@@ -27,15 +28,32 @@
                     Destroy(go);
                     break;
                 case Animation.SolidMelt:
-                    go.transform.localScale *= 0.5f;
+					SolidMelt(go, 0.8f);
                     break;
                 case Animation.LiquidReduce:
-                    go.transform.localScale = new Vector3(go.transform.localScale.x, go.transform.localScale.y * 0.5f, go.transform.localScale.z);
-                    break;
+					LiquidReduce(go, 0.5f);
+					break;
+				case Animation.LiquidChangeColor:
+					LiquidChangeColor(go, new Color(99f/255, 110f / 255, 3f / 255, 141f/255));
+					break;
                 default:
                     Debug.Log("Unrealized or Unknown Animation Type");
                     break;
             }
         }
+
+		public static void SolidMelt(GameObject go, float rate) { 
+			go.transform.localScale *= rate;
+		}
+
+		public static void LiquidChangeColor(GameObject go, Color color)
+		{
+			go.GetComponent<MeshRenderer>().material.color = color;
+		}
+
+		public static void LiquidReduce(GameObject go, float rate)
+		{
+			go.transform.localScale = new Vector3(go.transform.localScale.x, go.transform.localScale.y * rate, go.transform.localScale.z);
+		}
     }
 }
