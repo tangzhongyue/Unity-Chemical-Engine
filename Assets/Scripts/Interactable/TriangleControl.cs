@@ -55,6 +55,8 @@
                 else
                 {
                     pressure += (int)controlDirection * 100 * Time.fixedDeltaTime;
+                    if (pressure < 0.1)
+                        pressure = 0;
                     text.text = pressure.ToString() + " KPa";
                 }
             }
