@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18385327, g: 0.22906941, b: 0.3035423, a: 1}
+  m_IndirectSpecularColor: {r: 0.18385307, g: 0.2290688, b: 0.30354148, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1337,6 +1337,7 @@ GameObject:
   - component: {fileID: 293670851}
   - component: {fileID: 293670850}
   - component: {fileID: 293670849}
+  - component: {fileID: 293670860}
   m_Layer: 0
   m_Name: Fe 4
   m_TagString: Untagged
@@ -1553,6 +1554,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1570820318}
   m_GameObject: {fileID: 293670847}
   m_Mesh: {fileID: 4300000, guid: 4414134915e37be4a88a0163c0e0eff1, type: 3}
+--- !u!114 &293670860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 293670847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!1 &305345522 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 29724684d52b66541ac804f60d3761e1, type: 3}
@@ -3517,6 +3532,7 @@ GameObject:
   - component: {fileID: 629196578}
   - component: {fileID: 629196577}
   - component: {fileID: 629196576}
+  - component: {fileID: 629196587}
   m_Layer: 0
   m_Name: Fe 2
   m_TagString: Untagged
@@ -3733,6 +3749,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 882221012}
   m_GameObject: {fileID: 629196574}
   m_Mesh: {fileID: 4300000, guid: 4414134915e37be4a88a0163c0e0eff1, type: 3}
+--- !u!114 &629196587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 629196574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!1 &648171197
 GameObject:
   m_ObjectHideFlags: 0
@@ -5480,6 +5510,7 @@ GameObject:
   - component: {fileID: 1039373391}
   - component: {fileID: 1039373390}
   - component: {fileID: 1039373389}
+  - component: {fileID: 1039373400}
   m_Layer: 0
   m_Name: Fe 1
   m_TagString: Untagged
@@ -5696,6 +5727,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 447143683}
   m_GameObject: {fileID: 1039373387}
   m_Mesh: {fileID: 4300000, guid: 4414134915e37be4a88a0163c0e0eff1, type: 3}
+--- !u!114 &1039373400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1039373387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!1 &1044952574
 GameObject:
   m_ObjectHideFlags: 0
@@ -6254,6 +6299,7 @@ GameObject:
   - component: {fileID: 1258029090}
   - component: {fileID: 1258029089}
   - component: {fileID: 1258029088}
+  - component: {fileID: 1258029099}
   m_Layer: 0
   m_Name: Fe 3
   m_TagString: Untagged
@@ -6470,6 +6516,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1474637382}
   m_GameObject: {fileID: 1258029086}
   m_Mesh: {fileID: 4300000, guid: 4414134915e37be4a88a0163c0e0eff1, type: 3}
+--- !u!114 &1258029099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258029086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!1 &1264168409
 GameObject:
   m_ObjectHideFlags: 0
@@ -7157,12 +7217,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368888692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e599550a63e085488de4763f86fccaa, type: 3}
+  m_Script: {fileID: 11500000, guid: a8a946ca504f66442a886a572a9424c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chemicalAmount:
-    type: 0
-    amount: 1
+  source: HCl
+  sourceAmount: 6
+  sourceType: 0
 --- !u!1 &1368888695 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: cc15d7ac82b933d43a5b404121970a92, type: 3}
