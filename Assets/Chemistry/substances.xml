@@ -1,0 +1,83 @@
+<root>
+  <substance>
+<!-- metal -->
+  <Fe type="solid">
+    <material>FeMaterial</material>
+    <reactionTag>Fe_Hp</reactionTag>
+  </Fe>
+
+  <Fe2 type="ion">
+    <color>0:255:0:100</color>
+    <reactionTag>Fe2p_O2_Hp</reactionTag>
+  </Fe2>
+    
+  <Fe3p type="ion">
+    <color>255:255:0:100</color>
+  </Fe3p>
+  
+  <Al type="solid">
+    <material>AlMaterial</material>
+    <reactionTag>Al_Hp</reactionTag>
+  </Al>
+  
+  <Al3p type="ion">
+    <color>255:255:255:0</color>
+  </Al3p>
+  
+<!-- nonmetal -->
+  <O2 type="gas">
+    <color>255:255:255:0</color>
+    <reactionTag>Fe2p_O2_Hp</reactionTag>
+  </O2>
+  
+  <H2 type="gas">
+    <color>255:255:255:0</color>
+  </H2>
+    
+  <Hp type="ion">
+    <color>255:255:255:0</color>
+    <reactionTag>Fe_Hp</reactionTag>
+    <reactionTag>Fe2p_O2_Hp</reactionTag>
+  </Hp>
+  
+  <H2O type="liquid">
+    <color>255:255:255:0</color>
+  </H2O>
+
+    <HCl type="solid" solvable="true">
+      <color>255:255:255:0</color>
+    </HCl>
+
+    <Clm type="liquid">
+      <color>255:255:255:0</color>
+    </Clm>
+  </substance>
+<!-- reaction -->
+  <reaction>
+ <Al_Hp condition="liquid">
+   <reactant rate="2" type="solid">Al</reactant>
+   <reactant rate="6" type="liquid">Hp</reactant>
+   <product rate="2" type="liquid">Al3p</product>
+   <product rate="3" type="gas">H2</product>
+ </Al_Hp>
+  
+ <Fe_Hp condition="liquid">
+   <reactant rate="1" type="solid">Fe</reactant>
+   <reactant rate="2" type="liquid">Hp</reactant>
+   <product rate="1" type="liquid">Fe2p</product>
+   <product rate="1" type="gas">H2</product>
+ </Fe_Hp>
+
+ <Fe2p_O2_Hp condition="liquid">
+   <reactant rate="4" type="liquid">Hp</reactant>
+   <reactant rate="4" type="liquid">Fe2p</reactant>
+   <reactant rate="1" type="gas">O2</reactant>
+   <product rate="4" type="liquid">Fe3p</product>
+ </Fe2p_O2_Hp>
+    <HCl_Solve>
+      <reactant rate="1" type="solid">HCl</reactant>
+      <product rate="1" type="liquid">Hp</product>
+      <product rate="1" type="liquid">Clm</product>
+    </HCl_Solve>
+  </reaction>
+</root>
