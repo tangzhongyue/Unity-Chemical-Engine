@@ -12,13 +12,16 @@ public class substanceInfo
     public substanceType type;
     public double amount2;
     public substanceType type2;
-
+	public ArrayList obj;
+	public ArrayList obj2;
     public substanceInfo()
     {
         amount = 0;
         type = substanceType.None;
         amount2 = 0;
         type2 = substanceType.None;
+		obj = new ArrayList();
+		obj2 = new ArrayList();
     }
 }
 
@@ -90,14 +93,22 @@ public class ReactionSystem : MonoBehaviour
                 substance.Add(sub.name, new substanceInfo());
                 substance[sub.name].type = sub.type;
                 substance[sub.name].amount = sub.amount;
+				substance[sub.name].obj.Add(obj);
             }
             else if (substance[sub.name].type == sub.type)
             {
                 substance[sub.name].amount += sub.amount;
+				if (!substance[sub.name].obj.Contains(obj)) { 
+					substance[sub.name].obj.Add(obj);
+				}
             }
             else if(substance[sub.name].type2 == sub.type)
             {
                 substance[sub.name].amount2 += sub.amount;
+				if (!substance[sub.name].obj2.Contains(obj))
+				{
+					substance[sub.name].obj2.Add(obj);
+				}
             }
             else
             {
