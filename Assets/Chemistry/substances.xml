@@ -2,7 +2,7 @@
   <substance>
 <!-- metal -->
   <Fe type="solid">
-    <material>FeMaterial</material>
+    <color>FeMaterial</color>
     <reactionTag>Fe_Hp</reactionTag>
   </Fe>
 
@@ -16,7 +16,7 @@
   </Fe3p>
   
   <Al type="solid">
-    <material>AlMaterial</material>
+    <color>AlMaterial</color>
     <reactionTag>Al_Hp</reactionTag>
   </Al>
   
