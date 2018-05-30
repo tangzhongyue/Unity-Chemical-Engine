@@ -5,41 +5,102 @@ using System.Xml;
 using System.IO;
 using System.Collections.Specialized;
 
+public enum systemType { Solution, Air };
 
 public class substanceInfo
 {
-    public double amount;   //mol
-    public substanceType type;
-    public double amount2;
-    public substanceType type2;
+    //0:solid, 1:liquid, 2:gas
+    //in case that 2 states of a substance exist
+    public float[] amount;   //mol
+    public double concentration; //only with in solution
+    public string color; //R:G:B:A
 
     public substanceInfo()
     {
-        amount = 0;
-        type = substanceType.None;
-        amount2 = 0;
-        type2 = substanceType.None;
+        amount = new float[3];
+        amount[0] = amount[1] = amount[2] = 0;
+        concentration = 0;
+    }
+}
+
+public class substanceInfoOfReaction
+{
+    public string name;
+    public int rate;
+    public substanceType type;
+
+    public substanceInfoOfReaction(XmlElement xe)
+    {
+        //Debug.Log("im here");
+        name = xe.InnerText;
+        rate = int.Parse(xe.GetAttribute("rate").ToString());
+        type = (substanceType)System.Enum.Parse(typeof(substanceType), xe.GetAttribute("type"), true);
+    }
+}
+
+public class reactionInfo
+{
+    public ArrayList reactants;
+    public ArrayList products;
+
+    public reactionInfo(XmlElement xe)
+    {
+        //XmlNodeList reactantsXml = xe.GetElementsByTagName("reactant");
+        //XmlNodeList productsXml = xe.GetElementsByTagName("product");
+        reactants = new ArrayList();
+        products = new ArrayList();
+        foreach(XmlElement subXml in xe.ChildNodes)
+        {
+            if(subXml.Name.Equals("reactant"))
+                reactants.Add(new substanceInfoOfReaction(subXml));
+            else if(subXml.Name.Equals("product"))
+                products.Add(new substanceInfoOfReaction(subXml));
+        }
+        //Debug.Log(reactants.Count);
+        /*foreach (XmlElement r in reactants)
+            reactants.Add(new substanceInfoOfReaction(r));
+        foreach (XmlElement p in products)
+            products.Add(new substanceInfoOfReaction(p));*/
     }
 }
 
 public class ReactionSystem : MonoBehaviour
 {
+    //the source substance added into the system  (could be nothing later but now)  [TODO]
+    [SerializeField, Header("Origin Substance")]
     public string source;
-    public float sourceAmount;
+    public double sourceAmount;
     public substanceType sourceType;
+    //the condition of the system
+    [SerializeField, Header("Environment Conditions")]
+    public systemType sysType;
+    public double environmentTemperature = 20.0; // degree Celsius
+    public double environmentPressure = 101;  //kPa
+    //the local condition of a system
+    //now the whole system has share one local condition, which might be changed later [TODO]
+    public double localTemperature = 0;
+    public double localPressure = 0;
+    [SerializeField, Header("System Conditions")]
+    public double capacity = 1;
+    [Range(0, 1)]
+    public double volumn = 0.3; //L
 
-    private HashSet<string> reactionsNames;
+
+    private Dictionary<string, reactionInfo> reactions;
     private Dictionary<string, substanceInfo> substance;
     private XmlDocument xml;
 
-    bool reacting;
+    //this bool is used to determine if there are reactions reacting in the system
+    //every new reactions added into the systen will set it to 1
+    //even if the reactants' amount may be 0 due to the chain reaction calcalated before reacting
+    //every update will determine if there are still reactions
+    private bool isReacting = false;
+    
     // Use this for initialization
     void Start()
     {
-        reactionsNames = new HashSet<string>();
+        reactions = new Dictionary<string, reactionInfo>();
         substance = new Dictionary<string, substanceInfo>();
-
-        reacting = false;
 
         xml = new XmlDocument();
         //Debug.Log(Application.dataPath + "/Chemistry/substances.xml");
@@ -47,105 +108,156 @@ public class ReactionSystem : MonoBehaviour
         //Debug.Log(xml.GetElementsByTagName("Np").ToString());
 
         substance.Add("Hp", new substanceInfo());
-        substance["Hp"].amount = sourceAmount;
-        substance["Hp"].type = sourceType;
+        substance["Hp"].amount[1] = (float)sourceAmount;
+        substance["Hp"].concentration = sourceAmount / volumn;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (reactionsNames.Count == 0)
+        if (!isReacting)
             return;
-        ArrayList endReaction = new ArrayList();
-        foreach(string rTag in reactionsNames)
+        isReacting = false;
+        //ArrayList endReaction = new ArrayList();
+        foreach (string rTag in reactions.Keys)
         {
-            XmlNodeList reactants = xml.SelectNodes("root/reaction/" + rTag + "/" + "reactant");
-            foreach(XmlElement reactant in reactants)
+            reactionInfo rctInfo = reactions[rTag];
+            //deterine if a single reaction can still react
+            bool isSingleReactionReacting = true;
+            Dictionary<string, float> reactionAmounts = new Dictionary<string, float>();
+            CalculateReactionRate(rctInfo, reactionAmounts);
+            foreach (substanceInfoOfReaction sir in rctInfo.reactants)
             {
-                if(substance[reactant.InnerText].amount < 0.1)
+                if(substance[sir.name].amount[(int)sir.type] + reactionAmounts[sir.name] <= 0)
                 {
-                    endReaction.Add(rTag);
+                    //the reaction is not deleted after the reactant deplete due to the reversible reaction
+                    //endReaction.Add(rTag);
+                    isSingleReactionReacting = false;
                     break;
                 }
-                substance[reactant.InnerText].amount -= 0.1 * double.Parse(reactant.GetAttribute("rate"));
-                Debug.Log(substance[reactant.InnerText].amount);
             }
-            XmlNodeList products = xml.SelectNodes("root/reaction/" + rTag + "/" + "product");
-            foreach(XmlElement product in products)
+            if (!isSingleReactionReacting) break;
+            //react
+            string reactInfo = rTag + " : ";
+            foreach (substanceInfoOfReaction sir in rctInfo.reactants)
             {
-                substance[product.InnerText].amount += 0.1 * double.Parse(product.GetAttribute("rate"));
+                float reactionAmount = reactionAmounts[sir.name];
+                substance[sir.name].amount[(int)sir.type] += reactionAmount;
+                reactInfo += sir.name + "(" + substance[sir.name].amount[(int)sir.type] + " mol";
+                if (sir.type == substanceType.Liquid)
+                {
+                    substance[sir.name].concentration += reactionAmount / volumn;
+                    reactInfo += ", " + substance[sir.name].concentration + " mol/L";
+                }
+                reactInfo += ") + ";
             }
+            reactInfo = reactInfo.Substring(0, reactInfo.Length - 2);
+            reactInfo += "=== ";
+            foreach (substanceInfoOfReaction sir in rctInfo.products)
+            {
+                float reactionAmount = reactionAmounts[sir.name];
+                substance[sir.name].amount[(int)sir.type] += reactionAmount;
+                reactInfo += sir.name + "(" + substance[sir.name].amount[(int)sir.type] + " mol";
+                if (sir.type == substanceType.Liquid)
+                {
+                    substance[sir.name].concentration += reactionAmount / volumn;
+                    reactInfo += ", " + substance[sir.name].concentration + " mol/L";
+                }
+                reactInfo += ") + ";
+            }
+            reactInfo = reactInfo.Substring(0, reactInfo.Length - 2);
+            //if there are still reacting, set true
+            isReacting = true;
+            Debug.Log(reactInfo);
         }
-        foreach (string tmpR in endReaction)
-            reactionsNames.Remove(tmpR);
+        //foreach (string tmpR in endReaction)
+        //    reactionsNames.Remove(tmpR);
     }
 
+    //determine if the reaction could happen and add the products into the system
+    void AddProduct(string reactionTag)
+    {
+        //Debug.Log(reactionTag);
+        if (reactions.ContainsKey(reactionTag))
+            return;
+        XmlNodeList reactants = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "reactant");
+        foreach (XmlElement rtant in reactants)
+        {
+            int type_tmp = (int)(substanceType)System.Enum.Parse(typeof(substanceType), rtant.GetAttribute("type"), true);
+            if (substance[rtant.InnerText].amount[type_tmp] == 0)
+                return;
+        }
+        //Debug.Log(xml.SelectNodes("root/reaction/" + reactionTag + "/reactant").Count);
+        reactions.Add(reactionTag, new reactionInfo((XmlElement)xml.SelectSingleNode("root/reaction/" + reactionTag)));
+        XmlNodeList products = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "product");
+        foreach (XmlElement product in products)
+        {
+            if (!substance.ContainsKey(product.InnerText))
+            {
+                substance.Add(product.InnerText, new substanceInfo());
+                substance[product.InnerText].color = xml.SelectNodes("root/substance/" + product.InnerText + "/" + "color").ToString();
+                XmlNodeList productReactionTags = xml.SelectNodes("root/substance/" + product.InnerText + "/" + "reactionTag");
+                //only the new substances should be tested if there are new reactions stand by
+                foreach (XmlElement prt in productReactionTags)
+                    AddProduct(prt.InnerText);
+            }
+        }
+        isReacting = true;
+        return;
+    }
+
+    void CalculateReactionRate(reactionInfo rct, Dictionary<string, float> reactionAmounts)
+    {
+        foreach (substanceInfoOfReaction sir in rct.reactants)
+        {
+            reactionAmounts[sir.name] = -0.1f * sir.rate;
+        }
+        foreach (substanceInfoOfReaction sir in rct.products)
+        {
+            reactionAmounts[sir.name] = 0.1f * sir.rate;
+        }
+    }
+
+    //add a reactant to the system, called by collider
     public void AddReactant(GameObject obj)
     {
         Substance[] subs = obj.GetComponents<Substance>();
-        foreach(Substance sub in subs)
+        foreach (Substance sub in subs)
         {
             if (!substance.ContainsKey(sub.name))
             {
                 substance.Add(sub.name, new substanceInfo());
-                substance[sub.name].type = sub.type;
-                substance[sub.name].amount = sub.amount;
+                substance[sub.name].color = xml.SelectNodes("root/substance/" + sub.name + "/" + "color").ToString();
             }
-            else if (substance[sub.name].type == sub.type)
-            {
-                substance[sub.name].amount += sub.amount;
-            }
-            else if(substance[sub.name].type2 == sub.type)
-            {
-                substance[sub.name].amount2 += sub.amount;
-            }
-            else
-            {
-                Debug.LogError("wrong substance type");
-                return;
-            }
+            substance[sub.name].amount[(int)sub.type] = (float)sub.amount;
+            if (sub.type == substanceType.Liquid)
+                substance[sub.name].concentration += sub.amount / volumn;
             Destroy(sub);
         }
-        
-        foreach(string subName in substance.Keys)
+
+        //only the new substances should be tested if there are new reactions stand by
+        foreach (Substance sub in subs)
         {
             //Debug.Log(subName);
             //Debug.Log(xml.SelectSingleNode(subName))
             //XmlNode subXml = xml.SelectSingleNode(subName);
             //XmlNodeList reactionTags = subXml.SelectNodes("reactionTags");
-            XmlNodeList reactionTags = xml.SelectNodes("root/substance/"+subName+"/"+ "reactionTag");
+            string subName = sub.name;
+            XmlNodeList reactionTags = xml.SelectNodes("root/substance/" + subName + "/" + "reactionTag");
+            //tranverse all the reactions whose reactants include the new substance
             foreach (XmlElement rtag in reactionTags)
             {
                 string reactionTag = rtag.InnerText;
-                if (reactionsNames.Contains(reactionTag))
-                {
-                    continue;
-                }
-                XmlNodeList reactants = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "reactant");
-                bool canReact = true;
-                foreach(XmlElement rtant in reactants)
-                {
-                    if (substance[rtant.InnerText].amount == 0) {
-                        canReact = false;
-                        break;
-                    }
-                }
-                if (canReact)
-                {
-                    reactionsNames.Add(reactionTag);
-                    XmlNodeList products = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "product");
-                    foreach (XmlElement product in products)
-                    {
-                        if (!substance.ContainsKey(product.InnerText))
-                        {
-                            substance.Add(product.InnerText, new substanceInfo());
-                            substance[product.InnerText].type = (substanceType)System.Enum.Parse(typeof(substanceType), product.GetAttribute("type"), true);
-                            substance[product.InnerText].amount = 0;
-                        }
-                    }
-                }
+                //determine if the reaction could happen and add the products into the system
+                AddProduct(reactionTag);
             }
         }
     }
- 
+
+    //return the system's reaction system information
+    public Dictionary<string, substanceInfo> GetSubstances()
+    {
+        return substance;
+    }
+
 }

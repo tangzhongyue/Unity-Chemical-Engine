@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum substanceType { Solid, Liquid, Gas, None };
+public enum substanceType { Solid = 0, Liquid, Gas};
 
 public class Substance : MonoBehaviour {
     public string name;
