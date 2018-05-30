@@ -42,6 +42,7 @@ public class reactionInfo
 {
     public ArrayList reactants;
     public ArrayList products;
+    public float speedConstant;
 
     public reactionInfo(XmlElement xe)
     {
@@ -55,6 +56,8 @@ public class reactionInfo
                 reactants.Add(new substanceInfoOfReaction(subXml));
             else if(subXml.Name.Equals("product"))
                 products.Add(new substanceInfoOfReaction(subXml));
+            else if(subXml.Name.Equals("rateConstant"))
+                speedConstant = float.Parse(subXml.InnerText);
         }
         //Debug.Log(reactants.Count);
         /*foreach (XmlElement r in reactants)
@@ -110,15 +113,19 @@ public class ReactionSystem : MonoBehaviour
         substance.Add("Hp", new substanceInfo());
         substance["Hp"].amount[1] = (float)sourceAmount;
         substance["Hp"].concentration = sourceAmount / volumn;
+
+        substance.Add("O2", new substanceInfo());
+        substance["O2"].amount[2] = 10000f;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!isReacting)
             return;
         isReacting = false;
         //ArrayList endReaction = new ArrayList();
+        Debug.Log(reactions.Count);
         foreach (string rTag in reactions.Keys)
         {
             reactionInfo rctInfo = reactions[rTag];
@@ -184,6 +191,7 @@ public class ReactionSystem : MonoBehaviour
         foreach (XmlElement rtant in reactants)
         {
             int type_tmp = (int)(substanceType)System.Enum.Parse(typeof(substanceType), rtant.GetAttribute("type"), true);
+            Debug.Log(rtant.InnerText + " " + substance[rtant.InnerText].amount[type_tmp]);
             if (substance[rtant.InnerText].amount[type_tmp] == 0)
                 return;
         }
@@ -196,6 +204,8 @@ public class ReactionSystem : MonoBehaviour
             {
                 substance.Add(product.InnerText, new substanceInfo());
                 substance[product.InnerText].color = xml.SelectNodes("root/substance/" + product.InnerText + "/" + "color").ToString();
+                //so that the chain reaction can be added into the system
+                substance[product.InnerText].amount[(int)(substanceType)System.Enum.Parse(typeof(substanceType), product.GetAttribute("type"), true)] = 0.01f;
                 XmlNodeList productReactionTags = xml.SelectNodes("root/substance/" + product.InnerText + "/" + "reactionTag");
                 //only the new substances should be tested if there are new reactions stand by
                 foreach (XmlElement prt in productReactionTags)
@@ -208,13 +218,19 @@ public class ReactionSystem : MonoBehaviour
 
     void CalculateReactionRate(reactionInfo rct, Dictionary<string, float> reactionAmounts)
     {
+        float speed = rct.speedConstant;
+        Debug.Log(speed);
         foreach (substanceInfoOfReaction sir in rct.reactants)
         {
-            reactionAmounts[sir.name] = -0.1f * sir.rate;
+            speed *= Mathf.Pow(substance[sir.name].amount[(int)sir.type], sir.rate);
+        }
+        foreach (substanceInfoOfReaction sir in rct.reactants)
+        {
+            reactionAmounts[sir.name] = -speed * 0.02f * sir.rate;
         }
         foreach (substanceInfoOfReaction sir in rct.products)
         {
-            reactionAmounts[sir.name] = 0.1f * sir.rate;
+            reactionAmounts[sir.name] = speed * 0.02f * sir.rate;
         }
     }
 
