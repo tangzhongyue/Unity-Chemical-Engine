@@ -14,6 +14,8 @@ public class substanceInfo
     public float[] amount;   //mol
     public double concentration; //only with in solution
     public string color; //R:G:B:A
+    //0:solid, 1:liquid, 2:gas
+    public GameObject[] objects;
 
     public substanceInfo()
     {
@@ -74,6 +76,7 @@ public class ReactionSystem : MonoBehaviour
     public string source;
     public double sourceAmount;
     public substanceType sourceType;
+    public GameObject sourceObj;
     //the condition of the system
     [SerializeField, Header("Environment Conditions")]
     public systemType sysType;
@@ -92,6 +95,7 @@ public class ReactionSystem : MonoBehaviour
     private Dictionary<string, reactionInfo> reactions;
     private Dictionary<string, substanceInfo> substance;
     private XmlDocument xml;
+    private GameObject[] objPrefabs;
 
     //this bool is used to determine if there are reactions reacting in the system
     //every new reactions added into the systen will set it to 1
@@ -110,12 +114,20 @@ public class ReactionSystem : MonoBehaviour
         xml.Load(Application.dataPath + "/Chemistry/substances.xml");
         //Debug.Log(xml.GetElementsByTagName("Np").ToString());
 
+        objPrefabs = new GameObject[3];
+        objPrefabs[0] = (GameObject)Resources.Load("EmptySolid");
+        objPrefabs[1] = (GameObject)Resources.Load("EmptyLiquid");
+        objPrefabs[2] = (GameObject)Resources.Load("EmptyGas");
+
         substance.Add("Hp", new substanceInfo());
         substance["Hp"].amount[1] = (float)sourceAmount;
         substance["Hp"].concentration = sourceAmount / volumn;
+        substance["Hp"].objects[1] = sourceObj;
 
         substance.Add("O2", new substanceInfo());
         substance["O2"].amount[2] = 10000f;
+        substance["O2"].objects[2] = Instantiate(objPrefabs[2]);
+        substance["O2"].objects[2].transform.position = this.gameObject.transform.position + new Vector3(0, 0.2, 0);
     }
 
     // Update is called once per frame
@@ -200,12 +212,16 @@ public class ReactionSystem : MonoBehaviour
         XmlNodeList products = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "product");
         foreach (XmlElement product in products)
         {
+            //not work if substance exists but new state created [TODO]
             if (!substance.ContainsKey(product.InnerText))
             {
                 substance.Add(product.InnerText, new substanceInfo());
                 substance[product.InnerText].color = xml.SelectNodes("root/substance/" + product.InnerText + "/" + "color").ToString();
                 //so that the chain reaction can be added into the system
-                substance[product.InnerText].amount[(int)(substanceType)System.Enum.Parse(typeof(substanceType), product.GetAttribute("type"), true)] = 0.01f;
+                int type_tmp = (int)(substanceType)System.Enum.Parse(typeof(substanceType), product.GetAttribute("type"), true);
+                substance[product.InnerText].amount[type_tmp] = 0.01f;
+                substance[product.InnerText].objects[type_tmp] = Instantiate(objPrefabs[type_tmp]);
+                substance[product.InnerText].objects[type_tmp].transform.position = this.gameObject.transform.position;
                 XmlNodeList productReactionTags = xml.SelectNodes("root/substance/" + product.InnerText + "/" + "reactionTag");
                 //only the new substances should be tested if there are new reactions stand by
                 foreach (XmlElement prt in productReactionTags)
@@ -244,6 +260,7 @@ public class ReactionSystem : MonoBehaviour
             {
                 substance.Add(sub.name, new substanceInfo());
                 substance[sub.name].color = xml.SelectNodes("root/substance/" + sub.name + "/" + "color").ToString();
+                substance[sub.name].objects[(int)sub.type] = obj;
             }
             substance[sub.name].amount[(int)sub.type] = (float)sub.amount;
             if (sub.type == substanceType.Liquid)
