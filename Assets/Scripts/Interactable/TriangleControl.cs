@@ -38,8 +38,8 @@
         {
             base.StopUsing(usingObject);
             isUsing = false;
-            UCE_Engine.env_temperature = (int)Mathf.Round(temperature);
-            UCE_Engine.env_pressure = (int)Mathf.Round(pressure);
+            UCE_Global.env_temperature = (int)Mathf.Round(temperature);
+            UCE_Global.env_pressure = (int)Mathf.Round(pressure);
         }
 
         protected override void FixedUpdate()
