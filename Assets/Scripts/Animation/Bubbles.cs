@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReactionPhenomena : MonoBehaviour {
-	
+public class Bubbles : MonoBehaviour {
+	public GameObject bubbles;
 	// Use this for initialization
 	void Start () {
 		
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
+		
+	}
+
+	public void CreateBubbles(float r) {
 		
 	}
 }
