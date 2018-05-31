@@ -127,7 +127,7 @@ public class ReactionSystem : MonoBehaviour
         substance.Add("O2", new substanceInfo());
         substance["O2"].amount[2] = 10000f;
         substance["O2"].objects[2] = Instantiate(objPrefabs[2]);
-        substance["O2"].objects[2].transform.position = this.gameObject.transform.position + new Vector3(0, 0.2, 0);
+        substance["O2"].objects[2].transform.position = this.gameObject.transform.position + new Vector3(0, 0.2f, 0);
     }
 
     // Update is called once per frame
