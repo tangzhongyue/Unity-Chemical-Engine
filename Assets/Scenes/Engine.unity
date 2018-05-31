@@ -716,7 +716,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 282e039d7b6c49e4aa11151243c2f6a9, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 282e039d7b6c49e4aa11151243c2f6a9, type: 3}
       propertyPath: m_LocalScale.x
@@ -6258,7 +6258,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6240e03b3949c934bbd9db1a679c1191, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6240e03b3949c934bbd9db1a679c1191, type: 3}
       propertyPath: m_LocalScale.x
@@ -7223,6 +7223,14 @@ MonoBehaviour:
   source: HCl
   sourceAmount: 6
   sourceType: 0
+  sourceObj: {fileID: 0}
+  sysType: 0
+  environmentTemperature: 20
+  environmentPressure: 101
+  localTemperature: 0
+  localPressure: 0
+  capacity: 1
+  volumn: 0.3
 --- !u!1 &1368888695 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: cc15d7ac82b933d43a5b404121970a92, type: 3}
