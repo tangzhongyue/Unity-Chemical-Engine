@@ -45,6 +45,8 @@ public class reactionInfo
     public ArrayList reactants;
     public ArrayList products;
     public float speedConstant;
+    public float tempConstant;
+    public int startTemperature;
 
     public reactionInfo(XmlElement xe)
     {
@@ -52,14 +54,18 @@ public class reactionInfo
         //XmlNodeList productsXml = xe.GetElementsByTagName("product");
         reactants = new ArrayList();
         products = new ArrayList();
-        foreach(XmlElement subXml in xe.ChildNodes)
+        foreach (XmlElement subXml in xe.ChildNodes)
         {
-            if(subXml.Name.Equals("reactant"))
+            if (subXml.Name.Equals("reactant"))
                 reactants.Add(new substanceInfoOfReaction(subXml));
-            else if(subXml.Name.Equals("product"))
+            else if (subXml.Name.Equals("product"))
                 products.Add(new substanceInfoOfReaction(subXml));
-            else if(subXml.Name.Equals("rateConstant"))
+            else if (subXml.Name.Equals("rateConstant"))
                 speedConstant = float.Parse(subXml.InnerText);
+            else if (subXml.Name.Equals("startTemperature"))
+                startTemperature = int.Parse(subXml.InnerText);
+            else if(subXml.Name.Equals("tempConstant"))
+                tempConstant = float.Parse(subXml.InnerText);
         }
         //Debug.Log(reactants.Count);
         /*foreach (XmlElement r in reactants)
@@ -73,14 +79,15 @@ public class ReactionSystem : MonoBehaviour
 {
     //the source substance added into the system  (could be nothing later but now)  [TODO]
     [SerializeField, Header("Origin Substance")]
+    public bool hasSource;
     public string source;
     public double sourceAmount;
     public substanceType sourceType;
-    public GameObject sourceObj;
     //the condition of the system
     [SerializeField, Header("Environment Conditions")]
+    public bool openAir;
     public systemType sysType;
-    public double environmentTemperature = 20.0; // degree Celsius
+    public float environmentTemperature = 20.0f; // degree Celsius
     public double environmentPressure = 101;  //kPa
     //the local condition of a system
     //now the whole system has share one local condition, which might be changed later [TODO]
@@ -119,15 +126,21 @@ public class ReactionSystem : MonoBehaviour
         objPrefabs[1] = (GameObject)Resources.Load("EmptyLiquid");
         objPrefabs[2] = (GameObject)Resources.Load("EmptyGas");
 
-        substance.Add("Hp", new substanceInfo());
-        substance["Hp"].amount[1] = (float)sourceAmount;
-        substance["Hp"].concentration = sourceAmount / volumn;
-        substance["Hp"].objects[1] = sourceObj;
+        if (hasSource)
+        {
+            substance.Add(source, new substanceInfo());
+            substance[source].amount[1] = (float)sourceAmount;
+            substance[source].concentration = sourceAmount / volumn;
+            substance[source].objects[1] = this.gameObject;
+        }
 
-        substance.Add("O2", new substanceInfo());
-        substance["O2"].amount[2] = 10000f;
-        substance["O2"].objects[2] = Instantiate(objPrefabs[2]);
-        substance["O2"].objects[2].transform.position = this.gameObject.transform.position + new Vector3(0, 0.2f, 0);
+        if (openAir)
+        {
+            substance.Add("O2", new substanceInfo());
+            substance["O2"].amount[2] = 10000f;
+            substance["O2"].objects[2] = Instantiate(objPrefabs[2]);
+            substance["O2"].objects[2].transform.position = this.gameObject.transform.position + new Vector3(0, 0.2f, 0);
+        }
     }
 
     // Update is called once per frame
@@ -136,11 +149,14 @@ public class ReactionSystem : MonoBehaviour
         if (!isReacting)
             return;
         isReacting = false;
+        environmentTemperature = this.gameObject.GetComponent<UCE_Heatable>().temperature;
         //ArrayList endReaction = new ArrayList();
         Debug.Log(reactions.Count);
         foreach (string rTag in reactions.Keys)
         {
             reactionInfo rctInfo = reactions[rTag];
+            if (environmentTemperature < rctInfo.startTemperature)
+                break;
             //deterine if a single reaction can still react
             bool isSingleReactionReacting = true;
             Dictionary<string, float> reactionAmounts = new Dictionary<string, float>();
@@ -234,7 +250,7 @@ public class ReactionSystem : MonoBehaviour
 
     void CalculateReactionRate(reactionInfo rct, Dictionary<string, float> reactionAmounts)
     {
-        float speed = rct.speedConstant;
+        float speed = rct.speedConstant * rct.tempConstant * Mathf.Exp(-1.0f / (environmentTemperature - rct.startTemperature));
         Debug.Log(speed);
         foreach (substanceInfoOfReaction sir in rct.reactants)
         {
