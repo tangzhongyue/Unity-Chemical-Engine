@@ -27,15 +27,15 @@
 
         public void SetFire()
         {
-            //transform.Find("fire").gameObject.SetActive(true);
-			GetComponent<Fire>().SetFire();
+            GetComponent<Fire>().SetFire();
+            transform.Find("Flames").GetComponent<UCE_Heatable>().SetFire();
             onFire = true;
         }
 
         public void PutOutFire()
         {
-            //transform.Find("fire").gameObject.SetActive(false);
 			GetComponent<Fire>().PutOutFire();
+            transform.Find("Flames").GetComponent<UCE_Heatable>().PutOutFire();
             onFire = false;
         }
     }
