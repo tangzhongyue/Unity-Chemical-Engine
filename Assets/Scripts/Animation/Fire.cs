@@ -16,7 +16,7 @@ public class Fire : MonoBehaviour {
 
 	public void SetFire()
 	{
-		Debug.Log("set");
+		//Debug.Log("set");
 		foreach (GameObject p in Flames) {
 			p.GetComponent<ParticleSystem>().Play();
 		}
@@ -24,7 +24,7 @@ public class Fire : MonoBehaviour {
 
 	public void PutOutFire()
 	{
-		Debug.Log("out");
+		//Debug.Log("out");
 		foreach (GameObject p in Flames)
 		{
 			p.GetComponent<ParticleSystem>().Clear();
