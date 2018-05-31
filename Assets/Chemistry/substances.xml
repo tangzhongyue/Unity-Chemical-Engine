@@ -60,7 +60,9 @@
 <!-- reaction -->
   <reaction>
  <Al_Hp condition="liquid">
+   <startTemperature>0</startTemperature>
    <rateConstant>1</rateConstant>
+   <tempConstant>0.1</tempConstant>
    <reactant rate="2" type="solid">Al</reactant>
    <reactant rate="6" type="liquid">Hp</reactant>
    <product rate="2" type="liquid">Al3p</product>
@@ -68,7 +70,9 @@
  </Al_Hp>
   
  <Fe_Hp condition="liquid">
+   <startTemperature>0</startTemperature>
    <rateConstant>0.00001</rateConstant>
+   <tempConstant>0.1</tempConstant>
    <reactant rate="1" type="solid">Fe</reactant>
    <reactant rate="2" type="liquid">Hp</reactant>
    <product rate="1" type="liquid">Fe2p</product>
@@ -76,7 +80,9 @@
  </Fe_Hp>
 
  <Fe2p_O2_Hp condition="liquid">
+   <startTemperature>0</startTemperature>
    <rateConstant>0.00001</rateConstant>
+   <tempConstant>0.1</tempConstant>
    <reactant rate="4" type="liquid">Hp</reactant>
    <reactant rate="4" type="liquid">Fe2p</reactant>
    <reactant rate="1" type="gas">O2</reactant>
@@ -88,7 +94,9 @@
       <product rate="1" type="liquid">Clm</product>
     </HCl_Solve>
     <H2O2_Decompose>
-      <rateConstant>1</rateConstant>
+      <startTemperature>60</startTemperature>
+      <rateConstant>0.00001</rateConstant>
+      <tempConstant>0.1</tempConstant>
       <condition>heat</condition>
       <condition>liquid</condition>
       <reactant rate="2" type="liquid">H2O2</reactant>
