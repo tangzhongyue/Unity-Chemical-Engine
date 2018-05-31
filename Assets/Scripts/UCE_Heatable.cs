@@ -40,10 +40,6 @@
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<UCE_Heatable>())
-            {
-                Debug.Log(name + " meet " + other.name);
-            }
             if (type == Type.Burner)
             {
                 UCE_Heatable heatable = other.GetComponent<UCE_Heatable>();
@@ -72,9 +68,7 @@
                 UCE_Heatable heatable = other.GetComponent<UCE_Heatable>();
                 if (heatable)
                 {
-                    Debug.Log(name + " Lost heatee " + other.name);
-                    // This is required because the following corner case can happen:
-                    // Enter -> Enter -> Exit -> Exit
+                    //Debug.Log(name + " Lost heatee " + other.name);
                     heatable.isHeating = false;
                     childHeatable = null;
                 }
