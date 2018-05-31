@@ -149,7 +149,7 @@ public class ReactionSystem : MonoBehaviour
         if (!isReacting)
             return;
         isReacting = false;
-        environmentTemperature = this.gameObject.GetComponent<UCE_Heatable>().temperature;
+        environmentTemperature = this.gameObject.GetComponent<UCE.UCE_Heatable>().temperature;
         //ArrayList endReaction = new ArrayList();
         Debug.Log(reactions.Count);
         foreach (string rTag in reactions.Keys)
