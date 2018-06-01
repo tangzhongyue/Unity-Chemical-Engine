@@ -17,6 +17,7 @@
         public float temperature = 20;
 
         private bool isHeating = false;
+
         private UCE_Heatable childHeatable;
 
         private static float heatConst = 20f;
