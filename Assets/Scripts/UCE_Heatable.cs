@@ -13,8 +13,11 @@
         public Type type;
         public float boilingPoint = 100;
 
-        private bool isHeating = false;
+        [HideInInspector]
         public float temperature = 20;
+
+        private bool isHeating = false;
+
         private UCE_Heatable childHeatable;
 
         private static float heatConst = 20f;
