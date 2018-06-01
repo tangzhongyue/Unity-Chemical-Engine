@@ -18,7 +18,6 @@ public class Bubbles : MonoBehaviour
 
 	public void Emit(float amount) {
 		volume += amount;
-		Debug.Log("emit"+(int)(volume * 1000));
 		GetComponent<ParticleSystem>().Emit((int)(volume * 1000));
 		volume -= (float)((int)(volume * 1000)) / 1000;
 	}

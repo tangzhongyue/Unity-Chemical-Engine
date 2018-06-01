@@ -94,7 +94,7 @@
       <product rate="1" type="liquid">Clm</product>
     </HCl_Solve>
     <H2O2_Decompose>
-      <startTemperature>25</startTemperature>
+      <startTemperature>60</startTemperature>
       <rateConstant>0.01</rateConstant>
       <tempConstant>0.1</tempConstant>
       <condition>heat</condition>

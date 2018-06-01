@@ -1003,6 +1003,7 @@ Transform:
   m_Children:
   - {fileID: 1039373388}
   - {fileID: 629196575}
+  - {fileID: 293670848}
   - {fileID: 1258029087}
   m_Father: {fileID: 729338794}
   m_RootOrder: 5
@@ -1140,10 +1141,10 @@ GameObject:
   - component: {fileID: 293670855}
   - component: {fileID: 293670854}
   - component: {fileID: 293670853}
-  - component: {fileID: 293670852}
   - component: {fileID: 293670851}
   - component: {fileID: 293670850}
   - component: {fileID: 293670849}
+  - component: {fileID: 293670852}
   m_Layer: 0
   m_Name: Fe 4
   m_TagString: Untagged
@@ -1159,11 +1160,11 @@ Transform:
   m_PrefabInternal: {fileID: 1570820318}
   m_GameObject: {fileID: 293670847}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.435, y: 0.050335526, z: -0.029}
+  m_LocalPosition: {x: 0.462, y: 0.050335526, z: -0.1770539}
   m_LocalScale: {x: 0.021432959, y: 0.021432962, z: 0.021432962}
   m_Children: []
-  m_Father: {fileID: 729338794}
-  m_RootOrder: 8
+  m_Father: {fileID: 265736001}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &293670849
 MonoBehaviour:
@@ -1210,18 +1211,17 @@ BoxCollider:
 --- !u!114 &293670852
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114251697273028740, guid: 1ec944d95aa29884792fe0d4e77b4288,
-    type: 2}
-  m_PrefabInternal: {fileID: 1570820318}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 293670847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e599550a63e085488de4763f86fccaa, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chemicalAmount:
-    type: 1
-    amount: 1
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!114 &293670853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2627,10 +2627,10 @@ GameObject:
   - component: {fileID: 629196582}
   - component: {fileID: 629196581}
   - component: {fileID: 629196580}
-  - component: {fileID: 629196579}
   - component: {fileID: 629196578}
   - component: {fileID: 629196577}
   - component: {fileID: 629196576}
+  - component: {fileID: 629196579}
   m_Layer: 0
   m_Name: Fe 2
   m_TagString: Untagged
@@ -2697,18 +2697,17 @@ BoxCollider:
 --- !u!114 &629196579
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114251697273028740, guid: 1ec944d95aa29884792fe0d4e77b4288,
-    type: 2}
-  m_PrefabInternal: {fileID: 882221012}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 629196574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e599550a63e085488de4763f86fccaa, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chemicalAmount:
-    type: 1
-    amount: 1
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!114 &629196580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3248,7 +3247,6 @@ Transform:
   - {fileID: 265736001}
   - {fileID: 1368888691}
   - {fileID: 1564757112}
-  - {fileID: 293670848}
   m_Father: {fileID: 1905434048}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4737,10 +4735,10 @@ GameObject:
   - component: {fileID: 1039373395}
   - component: {fileID: 1039373394}
   - component: {fileID: 1039373393}
-  - component: {fileID: 1039373392}
   - component: {fileID: 1039373391}
   - component: {fileID: 1039373390}
   - component: {fileID: 1039373389}
+  - component: {fileID: 1039373392}
   m_Layer: 0
   m_Name: Fe 1
   m_TagString: Untagged
@@ -4807,18 +4805,17 @@ BoxCollider:
 --- !u!114 &1039373392
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114251697273028740, guid: 1ec944d95aa29884792fe0d4e77b4288,
-    type: 2}
-  m_PrefabInternal: {fileID: 447143683}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1039373387}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e599550a63e085488de4763f86fccaa, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chemicalAmount:
-    type: 1
-    amount: 1
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!114 &1039373393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5524,10 +5521,10 @@ GameObject:
   - component: {fileID: 1258029094}
   - component: {fileID: 1258029093}
   - component: {fileID: 1258029092}
-  - component: {fileID: 1258029091}
   - component: {fileID: 1258029090}
   - component: {fileID: 1258029089}
   - component: {fileID: 1258029088}
+  - component: {fileID: 1258029091}
   m_Layer: 0
   m_Name: Fe 3
   m_TagString: Untagged
@@ -5547,7 +5544,7 @@ Transform:
   m_LocalScale: {x: 0.021432959, y: 0.021432962, z: 0.021432962}
   m_Children: []
   m_Father: {fileID: 265736001}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1258029088
 MonoBehaviour:
@@ -5594,18 +5591,17 @@ BoxCollider:
 --- !u!114 &1258029091
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114251697273028740, guid: 1ec944d95aa29884792fe0d4e77b4288,
-    type: 2}
-  m_PrefabInternal: {fileID: 1474637382}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258029086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e599550a63e085488de4763f86fccaa, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b827e49e085be42ad14716a001b98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chemicalAmount:
-    type: 1
-    amount: 1
+  name: Fe
+  amount: 3
+  type: 0
 --- !u!114 &1258029092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6348,12 +6344,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368888692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e599550a63e085488de4763f86fccaa, type: 3}
+  m_Script: {fileID: 11500000, guid: a8a946ca504f66442a886a572a9424c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chemicalAmount:
-    type: 0
-    amount: 1
+  hasSource: 1
+  source: Hp
+  sourceAmount: 6
+  sourceType: 1
+  openAir: 1
+  sysType: 0
+  environmentTemperature: 20
+  environmentPressure: 101
+  DrawSystem: {fileID: 1842562632}
+  localTemperature: 0
+  localPressure: 0
+  capacity: 1
+  volumn: 0.3
 --- !u!1 &1368888695 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: cc15d7ac82b933d43a5b404121970a92, type: 3}
@@ -6395,6 +6401,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showName: HCL
   offset: {x: 0, y: 0.06, z: 0}
+--- !u!114 &1368888703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1368888692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71dddac43b1fcd94b961ca2c33d8fb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  boilingPoint: 100
+  temperature: 20
 --- !u!1001 &1369021541
 Prefab:
   m_ObjectHideFlags: 0
@@ -7800,11 +7820,11 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 729338794}
+    m_TransformParent: {fileID: 265736001}
     m_Modifications:
     - target: {fileID: 4278882136818664, guid: 1ec944d95aa29884792fe0d4e77b4288, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.435
+      value: 0.462
       objectReference: {fileID: 0}
     - target: {fileID: 4278882136818664, guid: 1ec944d95aa29884792fe0d4e77b4288, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7812,7 +7832,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4278882136818664, guid: 1ec944d95aa29884792fe0d4e77b4288, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.029
+      value: -0.1770539
       objectReference: {fileID: 0}
     - target: {fileID: 4278882136818664, guid: 1ec944d95aa29884792fe0d4e77b4288, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7832,7 +7852,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4278882136818664, guid: 1ec944d95aa29884792fe0d4e77b4288, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4278882136818664, guid: 1ec944d95aa29884792fe0d4e77b4288, type: 2}
       propertyPath: m_LocalScale.x
