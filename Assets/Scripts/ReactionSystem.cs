@@ -140,22 +140,32 @@ public class ReactionSystem : MonoBehaviour
 			substance[source].concentration = sourceAmount / volumn;
 			substance[source].objects[1].Add(this.gameObject);
 			substance[source].color = new float[] { 0, 0, 0, 0 };
+			XmlNodeList reactionTags = xml.SelectNodes("root/substance/" + source + "/" + "reactionTag");
+			//tranverse all the reactions whose reactants include the new substance
+			foreach (XmlElement rtag in reactionTags)
+			{
+				string reactionTag = rtag.InnerText;
+				//determine if the reaction could happen and add the products into the system
+				AddProduct(reactionTag);
+			}
 		}
 
 		if (openAir)
 		{
-			substance.Add("O2", new substanceInfo());
-			substance["O2"].amount[2] = 10f;
-			GameObject new_obj = Instantiate((GameObject)Resources.Load("Empty"));
-			new_obj.transform.position = this.gameObject.transform.position + new Vector3(0, 0.2f, 0);
+			if(!substance.ContainsKey("O2"))
+				substance.Add("O2", new substanceInfo());
+			substance["O2"].amount[2] = 1;
+			GameObject new_obj = Instantiate((GameObject)Resources.Load("EmptyGas"));
+			new_obj.transform.position = this.gameObject.transform.position;
 			substance["O2"].objects[2].Add(new_obj);
+			substance["O2"].gasCreater.Add(null);
 		}
 	}
 
 	// Update is called once per frame
 	void FixedUpdate()
 	{
-		if (!isReacting)
+		if (!isReacting && Mathf.Abs(gameObject.GetComponent<UCE.UCE_Heatable>().temperature - environmentTemperature) < Mathf.Epsilon)
 			return;
 		isReacting = false;
 		environmentTemperature = this.gameObject.GetComponent<UCE.UCE_Heatable>().temperature;
@@ -164,8 +174,10 @@ public class ReactionSystem : MonoBehaviour
 		foreach (string rTag in reactions.Keys)
 		{
 			reactionInfo rctInfo = reactions[rTag];
+			Debug.Log(rTag + "1");
 			if (environmentTemperature < rctInfo.startTemperature)
 				break;
+			Debug.Log(rTag + "2");
 			//deterine if a single reaction can still react
 			bool isSingleReactionReacting = true;
 			Dictionary<string, float> reactionAmounts = new Dictionary<string, float>();
@@ -216,8 +228,9 @@ public class ReactionSystem : MonoBehaviour
 			reactInfo = reactInfo.Substring(0, reactInfo.Length - 2);
 			//if there are still reacting, set true
 			isReacting = true;
+			//Debug.Log(reactInfo);
 			DrawSystem.GetComponent<ReactionPhenomena>().DrawPhenomena(substance, rctInfo, reactionAmounts);
-			Debug.Log(reactInfo);
+
 		}
 		//foreach (string tmpR in endReaction)
 		//    reactionsNames.Remove(tmpR);
@@ -258,16 +271,17 @@ public class ReactionSystem : MonoBehaviour
 	//determine if the reaction could happen and add the products into the system
 	void AddProduct(string reactionTag)
 	{
-		//Debug.Log(reactionTag);
-		if (!reactions.ContainsKey(reactionTag))
-			reactions.Add(reactionTag, new reactionInfo((XmlElement)xml.SelectSingleNode("root/reaction/" + reactionTag)));;
+		Debug.Log(reactionTag);
+		if (reactions.ContainsKey(reactionTag))
+			return;
 		GameObject gasCreater = null;
 		XmlNodeList reactants = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "reactant");
 		foreach (XmlElement rtant in reactants)
 		{
 			int type_tmp = (int)(substanceType)System.Enum.Parse(typeof(substanceType), rtant.GetAttribute("type"), true);
-			Debug.Log(rtant.InnerText + " " + substance[rtant.InnerText].amount[type_tmp]);
-			if (substance[rtant.InnerText].amount[type_tmp] == 0)
+			Debug.Log(rtant.InnerText);
+			//Debug.Log(rtant.InnerText + " " + substance[rtant.InnerText].amount[type_tmp]);
+			if (!substance.ContainsKey(rtant.InnerText) || substance[rtant.InnerText].amount[type_tmp] == 0)
 				return;
 			if (type_tmp == (int)substanceType.Solid) {
 				gasCreater = (GameObject)substance[rtant.InnerText].objects[type_tmp][substance[rtant.InnerText].objects[type_tmp].Count-1];
@@ -275,6 +289,7 @@ public class ReactionSystem : MonoBehaviour
 
 		}
 		//Debug.Log(xml.SelectNodes("root/reaction/" + reactionTag + "/reactant").Count);
+		reactions.Add(reactionTag, new reactionInfo((XmlElement)xml.SelectSingleNode("root/reaction/" + reactionTag))); ;
 
 		XmlNodeList products = xml.SelectNodes("root/reaction/" + reactionTag + "/" + "product");
 		foreach (XmlElement product in products)
@@ -334,6 +349,7 @@ public class ReactionSystem : MonoBehaviour
 		//Debug.Log(speed);
 		foreach (substanceInfoOfReaction sir in rct.reactants)
 		{
+			Debug.Log(sir.name);
 			speed *= Mathf.Pow(substance[sir.name].amount[(int)sir.type], sir.rate);
 		}
 		foreach (substanceInfoOfReaction sir in rct.reactants)

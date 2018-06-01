@@ -46,13 +46,16 @@ public class ReactionPhenomena : MonoBehaviour {
 			gas.GetComponent<MeshRenderer>().material.color = c;
 		}*/
 		ArrayList gass = substance.objects[(int)substanceType.Gas];
-		//Debug.Log(gass.Count);
 		foreach (GameObject gas in gass)
 		{
 			GameObject gasCreater = (GameObject)substance.gasCreater[gass.IndexOf(gas)];
-			if (gasCreater != null) {
+			if (gasCreater != null)
+			{
 				gas.GetComponent<Bubbles>().MoveBubblesToNewPosition(gasCreater.transform);
-				gas.GetComponent<ParticleSystem>().Emit((int)(reactionAmount * 1000));
+				gas.GetComponent<Bubbles>().Emit(reactionAmount);
+			}
+			else{
+				gas.GetComponent<Bubbles>().Emit(reactionAmount);
 			}
 		}
 	}
@@ -86,13 +89,11 @@ public class ReactionPhenomena : MonoBehaviour {
 	public void DrawPhenomena(Dictionary<string, substanceInfo> substances, reactionInfo rctInfo, Dictionary<string, float> reactionAmounts) {
 		foreach (substanceInfoOfReaction sir in rctInfo.reactants)
 		{
-			if(!sir.name.Equals("O2"))
-				DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
+			DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
 		}
 		foreach (substanceInfoOfReaction sir in rctInfo.products)
 		{
-			if (!sir.name.Equals("O2"))
-				DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
+			DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
 			
 		}
 	}

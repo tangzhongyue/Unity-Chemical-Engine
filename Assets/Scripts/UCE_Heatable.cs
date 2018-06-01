@@ -20,7 +20,7 @@
 
         private UCE_Heatable childHeatable;
 
-        private static float heatConst = 20f;
+        private static float heatConst = 1f;
         private static float coolConst = 10f;
 
         public void SetFire()
@@ -92,7 +92,7 @@
                     if (temperature < boilingPoint)
                     {
                         temperature += Time.deltaTime * heatConst;
-                        Debug.Log(name + " Heat Temperature: " + temperature);
+                        //Debug.Log(name + " Heat Temperature: " + temperature);
                     }
                 }
                 else if (temperature < UCE_Global.env_temperature - 0.01f)
@@ -102,7 +102,7 @@
                 else if (temperature > UCE_Global.env_temperature + 0.01f)
                 {
                     temperature -= Time.deltaTime * coolConst;
-                    Debug.Log(name + " Cool Temperature: " + temperature);
+                    //Debug.Log(name + " Cool Temperature: " + temperature);
                 }
             }
         }
