@@ -228,7 +228,7 @@ public class ReactionSystem : MonoBehaviour
 			reactInfo = reactInfo.Substring(0, reactInfo.Length - 2);
 			//if there are still reacting, set true
 			isReacting = true;
-			//Debug.Log(reactInfo);
+			Debug.Log(reactInfo);
 			DrawSystem.GetComponent<ReactionPhenomena>().DrawPhenomena(substance, rctInfo, reactionAmounts);
 
 		}
