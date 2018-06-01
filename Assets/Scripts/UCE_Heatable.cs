@@ -14,7 +14,7 @@
         public float boilingPoint = 100;
 
         private bool isHeating = false;
-        private float temperature = 20;
+        public float temperature = 20;
         private UCE_Heatable childHeatable;
 
         private static float heatConst = 20f;

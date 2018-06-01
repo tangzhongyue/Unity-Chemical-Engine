@@ -1,31 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
-public class Bubbles : MonoBehaviour {
-	private SerializedObject bubbles;
-
+public class Bubbles : MonoBehaviour
+{
+	float volume = 0.0f;
 	// Use this for initialization
-	void Start () {
-		bubbles = new SerializedObject(GetComponent<ParticleSystem>());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-	public void CreateBubbles(float r, int rateOverTime) {
-		bubbles.FindProperty("ShapeModule.radius").floatValue = r;
-		bubbles.FindProperty("EmissionModule.rateOverTime").intValue = rateOverTime;
-		GetComponent<ParticleSystem>().Play();
-	}
-
-	public void ChangeBubblesState(float r, int rateOverTime)
+	void Start()
 	{
-		bubbles.FindProperty("ShapeModule.radius").floatValue = r;
-		bubbles.FindProperty("EmissionModule.rateOverTime").intValue = rateOverTime;
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+
+	}
+
+	public void Emit(float amount) {
+		volume += amount;
+		GetComponent<ParticleSystem>().Emit((int)(volume * 1000));
+		volume -= (float)((int)(volume * 1000)) / 1000;
+	}
+
+	public void MoveBubblesToNewPosition(Transform t) {
+		float yoffset = t.position.y - transform.position.y;
+		float newLifeTime = GetComponent<ParticleSystem>().main.startLifetime.constant - yoffset / GetComponent<ParticleSystem>().velocityOverLifetime.y.constantMax;
+		var main = GetComponent<ParticleSystem>().main;
+		main.startLifetime = newLifeTime;
+		transform.position = t.position;
 	}
 
 	public void StopBubbles()
