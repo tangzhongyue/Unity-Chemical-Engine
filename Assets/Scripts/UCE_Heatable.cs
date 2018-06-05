@@ -20,7 +20,7 @@
 
         private UCE_Heatable childHeatable;
 
-        private static float heatConst = 1f;
+        private static float heatConst = 10f;
         private static float coolConst = 10f;
 
         public void SetFire()
