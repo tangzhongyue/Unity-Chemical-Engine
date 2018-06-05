@@ -15,6 +15,8 @@
 
         [HideInInspector]
         public float temperature = 20;
+        [HideInInspector]
+        public Vector3 position;
 
         private bool isHeating = false;
 
@@ -81,6 +83,11 @@
         void Start()
         {
             temperature = UCE_Global.env_temperature;
+            if (type == Type.Burner)
+            {
+                position = gameObject.transform.position;
+                UCE_Global.Register(this);
+            }
         }
 
         void Update()
