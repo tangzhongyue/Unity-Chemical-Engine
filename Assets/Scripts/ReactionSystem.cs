@@ -174,10 +174,10 @@ public class ReactionSystem : MonoBehaviour
 		foreach (string rTag in reactions.Keys)
 		{
 			reactionInfo rctInfo = reactions[rTag];
-			Debug.Log(rTag + "1");
+			//Debug.Log(rTag + "1");
 			if (environmentTemperature < rctInfo.startTemperature)
 				break;
-			Debug.Log(rTag + "2");
+			//Debug.Log(rTag + "2");
 			//deterine if a single reaction can still react
 			bool isSingleReactionReacting = true;
 			Dictionary<string, float> reactionAmounts = new Dictionary<string, float>();
@@ -228,7 +228,7 @@ public class ReactionSystem : MonoBehaviour
 			reactInfo = reactInfo.Substring(0, reactInfo.Length - 2);
 			//if there are still reacting, set true
 			isReacting = true;
-			Debug.Log(reactInfo);
+			//Debug.Log(reactInfo);
 			DrawSystem.GetComponent<ReactionPhenomena>().DrawPhenomena(substance, rctInfo, reactionAmounts);
 
 		}
@@ -271,7 +271,7 @@ public class ReactionSystem : MonoBehaviour
 	//determine if the reaction could happen and add the products into the system
 	void AddProduct(string reactionTag)
 	{
-		Debug.Log(reactionTag);
+		//Debug.Log(reactionTag);
 		if (reactions.ContainsKey(reactionTag))
 			return;
 		GameObject gasCreater = null;
@@ -279,7 +279,7 @@ public class ReactionSystem : MonoBehaviour
 		foreach (XmlElement rtant in reactants)
 		{
 			int type_tmp = (int)(substanceType)System.Enum.Parse(typeof(substanceType), rtant.GetAttribute("type"), true);
-			Debug.Log(rtant.InnerText);
+			//Debug.Log(rtant.InnerText);
 			//Debug.Log(rtant.InnerText + " " + substance[rtant.InnerText].amount[type_tmp]);
 			if (!substance.ContainsKey(rtant.InnerText) || substance[rtant.InnerText].amount[type_tmp] == 0)
 				return;
@@ -349,7 +349,7 @@ public class ReactionSystem : MonoBehaviour
 		//Debug.Log(speed);
 		foreach (substanceInfoOfReaction sir in rct.reactants)
 		{
-			Debug.Log(sir.name);
+			//Debug.Log(sir.name);
 			speed *= Mathf.Pow(substance[sir.name].amount[(int)sir.type], sir.rate);
 		}
 		foreach (substanceInfoOfReaction sir in rct.reactants)

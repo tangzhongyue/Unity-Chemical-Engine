@@ -11,14 +11,50 @@
         private bool show = false;
         private GameObject myObject;
 
-        static List<GameObject> textObjects = new List<GameObject>();
+        private static List<GameObject> textObjects = new List<GameObject>();
 
-        public void changeName(string newName)
+        public static GameObject AllocateText()
+        {
+            GameObject ret = null;
+            for (int i = 0; i < textObjects.Count; i++)
+            {
+                if (!textObjects[i].activeInHierarchy)
+                {
+                    ret = textObjects[i];
+                    ret.SetActive(true);
+                    break;
+                }
+            }
+
+            if (ret == null)
+            {
+                ret = Instantiate<GameObject>(textObjects[0]);
+                textObjects.Add(ret);
+            }
+
+            return ret;
+        }
+
+        public static void FreeText(GameObject go)
+        {
+            if (go)
+            {
+                go.SetActive(false);
+                go = null;
+            }
+        }
+
+        public static void SetText(GameObject go, string text)
+        {
+            go.transform.Find("text").GetComponent<TextMesh>().text = text;
+        }
+
+        public void ChangeName(string newName)
         {
             showName = newName;
             if (myObject)
             {
-                myObject.transform.Find("text").GetComponent<TextMesh>().text = showName;
+                SetText(myObject, showName);
             }
         }
 
@@ -42,24 +78,8 @@
                 {
                     OnTriggerExit(other);
                 }
-                
-                for (int i = 0; i < textObjects.Count; i++)
-                {
-                    if (!textObjects[i].activeInHierarchy)
-                    {
-                        myObject = textObjects[i];
-                        myObject.SetActive(true);
-                        myObject.transform.Find("text").GetComponent<TextMesh>().text = showName;
-                        break;
-                    }
-                }
-
-                if (myObject == null)
-                {
-                    myObject = Instantiate<GameObject>(textObjects[0]);
-                    textObjects.Add(myObject);
-                }
-
+                myObject = AllocateText();
+                SetText(myObject, showName);
                 show = true;
             }
         }
@@ -74,17 +94,13 @@
             if (other.name.Contains("Controller") || other.name.Contains("Side"))
             {
                 show = false;
-                myObject.SetActive(false);
-                myObject = null;
+                FreeText(myObject);
             }
         }
 
         void OnDestroy()
         {
-            if (myObject)
-            {
-                myObject.SetActive(false);
-            }
+            FreeText(myObject);
         }
 
         void LateUpdate()

@@ -17,8 +17,8 @@
         public float temperature = 20;
         [HideInInspector]
         public Vector3 position;
-
-        private bool isHeating = false;
+        [HideInInspector]
+        public bool isHeating = false;
 
         private UCE_Heatable childHeatable;
 
@@ -73,7 +73,6 @@
                 UCE_Heatable heatable = other.GetComponent<UCE_Heatable>();
                 if (heatable)
                 {
-                    //Debug.Log(name + " Lost heatee " + other.name);
                     heatable.isHeating = false;
                     childHeatable = null;
                 }
@@ -99,7 +98,6 @@
                     if (temperature < boilingPoint)
                     {
                         temperature += Time.deltaTime * heatConst;
-                        //Debug.Log(name + " Heat Temperature: " + temperature);
                     }
                 }
                 else if (temperature < UCE_Global.env_temperature - 0.01f)
@@ -109,7 +107,6 @@
                 else if (temperature > UCE_Global.env_temperature + 0.01f)
                 {
                     temperature -= Time.deltaTime * coolConst;
-                    //Debug.Log(name + " Cool Temperature: " + temperature);
                 }
             }
         }

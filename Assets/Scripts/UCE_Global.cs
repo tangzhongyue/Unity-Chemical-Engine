@@ -11,6 +11,8 @@
 
         // TODO: support multiple burner
         private static UCE_Heatable burner;
+        private static Vector3 lastPos = new Vector3(0, 0, 0);
+        private static float lastTemp = 0;
 
         public static void Register(UCE_Heatable heatable)
         {
@@ -22,25 +24,42 @@
         /// Note that the unit for result is ℃.
 	    public static float GetTemperature(Vector3 position)
         {
-            float res = 0;
-            Vector3 distance3d = position - burner.position;
-            Vector2 distance2d = new Vector2(distance3d.x, distance3d.z);
-            // inner flame
-            if (distance2d.magnitude < 0.012f && Math.Abs(distance3d.y - 0.04f) < 0.07f)
+            float res = env_temperature;
+            if (burner.isHeating)
             {
-                res = 600f;
-            }
-            // outter flame
-            else if (distance2d.magnitude < 0.025f && Math.Abs(distance3d.y - 0.05f) < 0.18f)
-            {
-                res = 400f;
-            }
-            // elsewhere
-            else
-            {
-                res = env_temperature;
+                if (lastPos == position)
+                {
+                    return lastTemp;
+                }
+                // we should use the thermometer head to detect temperature, so 
+                // we need to move the position from the center to the head
+                position += Thermometer.offsetFromCenter;
+                Vector3 distance3d = position - burner.position;
+                distance3d = new Vector3(distance3d.x, (distance3d.y - 0.04f)/1.6f, distance3d.z);
+                Debug.Log("GetTemperature: " + distance3d.ToString("f4"));
+                float magnitude = distance3d.magnitude;
+                
+                // inner flame
+                if (magnitude < 0.012f)
+                {
+                    // (0, 648) -> (0.012, 600)
+                    res = 648 - magnitude * 4000;
+                }
+                // outter flame
+                else if (magnitude < 0.025f)
+                {
+                    // (0.012, 600) -> (0.025, 405)
+                    res = 780 - magnitude * 15000;
+                }
+                else
+                {
+                    // (0.025, 405) -> (inf, env_temperature)
+                    res = (405 - env_temperature) * 0.025f * 0.025f / magnitude / magnitude + env_temperature;
+                }
             }
 
+            lastPos = position;
+            lastTemp = res;
             return res;
         }
     }
