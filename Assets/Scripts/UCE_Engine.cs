@@ -23,17 +23,17 @@
             }
         }
 
-        public class ReactionResult
-        {
-            UCE_Animation.Animation animation;
-            List<ChemicalAmount> chemical;
+        //public class ReactionResult
+        //{
+        //    UCE_Animation.Animation animation;
+        //    List<ChemicalAmount> chemical;
 
-            public ReactionResult(UCE_Animation.Animation _animation, List<ChemicalAmount> _chemical)
-            {
-                animation = _animation;
-                chemical = _chemical;
-            }
-        }
+        //    public ReactionResult(UCE_Animation.Animation _animation, List<ChemicalAmount> _chemical)
+        //    {
+        //        animation = _animation;
+        //        chemical = _chemical;
+        //    }
+        //}
 
         public static int env_temperature;
 

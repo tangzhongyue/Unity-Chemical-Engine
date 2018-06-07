@@ -8,8 +8,7 @@
 
         [HideInInspector]
         public static Vector3 offsetFromCenter = new Vector3(0.005f, 0.026f, -0.0965f);
-
-        private VRTK_InteractableObject ito;
+        
         private GameObject myObject;
         private bool show = false;
         private int cnt = 0;
@@ -83,7 +82,6 @@
         // Use this for initialization
         void Start()
         {
-            ito = GetComponent<VRTK_InteractableObject>();
         }
 
         // Update is called once per frame

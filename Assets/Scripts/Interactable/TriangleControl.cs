@@ -32,14 +32,20 @@
         {
             base.StartUsing(usingObject);
             isUsing = true;
+            if (controlType == ControlType.Pressure)
+            {
+                UCE_Pressure.StartChanging();
+            }
         }
 
         public override void StopUsing(VRTK_InteractUse usingObject)
         {
             base.StopUsing(usingObject);
             isUsing = false;
-            UCE_Global.env_temperature = (int)Mathf.Round(temperature);
-            UCE_Global.env_pressure = (int)Mathf.Round(pressure);
+            if (controlType == ControlType.Pressure)
+            {
+                UCE_Pressure.StopChanging();
+            }
         }
 
         protected override void FixedUpdate()
@@ -51,17 +57,17 @@
                 {
                     temperature += (int)controlDirection * 20 * Time.fixedDeltaTime;
                     text.text = temperature.ToString("f0") + " ℃";
+                    UCE_Global.env_temperature = (int)Mathf.Round(temperature);
                 }
                 else
                 {
                     pressure += (int)controlDirection * 100 * Time.fixedDeltaTime;
-                    if (pressure < 0.1)
-                        pressure = 0;
+                    if (pressure < 1.01f)
+                        pressure = 1f;
                     text.text = pressure.ToString() + " KPa";
+                    UCE_Global.env_pressure = (int)Mathf.Round(pressure);
                 }
             }
         }
-
-        // TODO: while holding 
     }
 }
