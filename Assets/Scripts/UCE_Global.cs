@@ -36,7 +36,6 @@
                 position += Thermometer.offsetFromCenter;
                 Vector3 distance3d = position - burner.position;
                 distance3d = new Vector3(distance3d.x, (distance3d.y - 0.04f)/1.6f, distance3d.z);
-                Debug.Log("GetTemperature: " + distance3d.ToString("f4"));
                 float magnitude = distance3d.magnitude;
                 
                 // inner flame
