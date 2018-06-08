@@ -15,6 +15,8 @@ TagManager:
   - NameText
   - PipeAndPlug
   - Cutton
+  - Tube
+  - CoverGlass
   layers:
   - Default
   - TransparentFX
