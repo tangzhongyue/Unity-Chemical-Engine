@@ -13,6 +13,8 @@ TagManager:
   - OtherSaucers
   - BurnerLid
   - NameText
+  - PipeAndPlug
+  - Cutton
   layers:
   - Default
   - TransparentFX
