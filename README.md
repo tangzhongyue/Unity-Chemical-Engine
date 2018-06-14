@@ -2,6 +2,28 @@
 
 This is SJTU Game Programming final based on Unity & VRTK.
 
+### 6.14 更新
+
+* 因为桌子放不下了，所以器材在场景中分为equipments-1(之前的器材), equipments-2(高锰酸钾器材)
+
+* 加入温度计及脚本Thermometer
+
+* 加入压强反应器材及脚本PressureContainer，压强通过`UCE_Global.env_pressure`获取
+
+* 加入高锰酸钾反应器材，高锰酸钾器材支持以下操作：
+
+  * 移动：酒精灯、试管、集气瓶、棉花
+  * 安装：在试管中装棉花、导管，在集气瓶上盖盖玻片
+  * Note: 碰撞体有点多，移动物体的时候可能会把其他东西挤飞
+
+* 酒精灯、试管因为碰撞体冲突的原因，**只能用左手拾取**
+
+* 改变材质颜色Tip：可以不用多个透明模型进行叠加，可以在脚本中改变MeshRenderer属性
+
+  ```c#
+  transform.GetComponent<MeshRenderer>().material.color = new Color();
+  ```
+
 ### 运行逻辑
 
 * 电脑上可VR模拟器操作，按[alt]在控制视角和控制手柄模式间切换，控制手柄时按[tab]进行手的切换。

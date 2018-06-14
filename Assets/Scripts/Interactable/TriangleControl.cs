@@ -34,7 +34,7 @@
             isUsing = true;
             if (controlType == ControlType.Pressure)
             {
-                UCE_Pressure.StartChanging();
+                PressureContainer.StartChanging();
             }
         }
 
@@ -44,7 +44,7 @@
             isUsing = false;
             if (controlType == ControlType.Pressure)
             {
-                UCE_Pressure.StopChanging();
+                PressureContainer.StopChanging();
             }
         }
 

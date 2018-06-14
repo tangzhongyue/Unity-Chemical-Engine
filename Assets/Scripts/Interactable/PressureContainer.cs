@@ -3,14 +3,13 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class UCE_Pressure : MonoBehaviour
+    public class PressureContainer : MonoBehaviour
     {
         [Tooltip("The localPosition.y of the top of the container")]
         public float topPositionY;
         [Tooltip("The localPosition.y of the bottom of the container")]
         public float bottomPositionY;
-
-        private static List<UCE_Pressure> upressures = new List<UCE_Pressure>();
+        
         private static bool isChanging = false;
 
         private float volume = 1f;
@@ -34,7 +33,6 @@
 
         void Start()
         {
-            upressures.Add(this);
             lid = transform.Find("lid");
             gas = transform.Find("gas");
             gasMat = gas.Find("gasModel").GetComponent<MeshRenderer>().material;
