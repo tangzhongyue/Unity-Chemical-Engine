@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114722256141038704}
   - component: {fileID: 54016460414543614}
   - component: {fileID: 114026821235368890}
+  - component: {fileID: 114310339624292598}
   m_Layer: 0
   m_Name: pipe&plug
   m_TagString: PipeAndPlug
@@ -113,8 +114,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153123575002408}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0.14877719, y: -0.053152204, z: 0.41449514}
+  m_LocalRotation: {x: -0.0021690417, y: 0.7071035, z: -0.0021690417, w: 0.7071035}
+  m_LocalPosition: {x: 0.14877707, y: 0.088790774, z: -0.096305445}
   m_LocalScale: {x: 0.40000048, y: 0.40000078, z: 0.39999992}
   m_Children:
   - {fileID: 4096336237282964}
@@ -122,7 +123,7 @@ Transform:
   - {fileID: 4467294886474302}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: -0.35200003}
 --- !u!4 &4940973462277028
 Transform:
   m_ObjectHideFlags: 1
@@ -263,6 +264,18 @@ MonoBehaviour:
   customOutlineModels: []
   customOutlineModelPaths: []
   enableSubmeshHighlight: 0
+--- !u!114 &114310339624292598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1153123575002408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d364ec3126d6e4cbf57179d9c6425e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottle: {fileID: 0}
 --- !u!114 &114522962199110324
 MonoBehaviour:
   m_ObjectHideFlags: 1
