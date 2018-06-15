@@ -24,6 +24,15 @@ This is SJTU Game Programming final based on Unity & VRTK.
   transform.GetComponent<MeshRenderer>().material.color = new Color();
   ```
 
+* 集气瓶
+
+  * 导管伸入时，触发Bottle.cs中的StartCollecting函数，开始收集气体，逐渐缩小液体模型
+  * 集气瓶收集完成后，可以正放在桌上紫色区域（只有编辑模式下可以看到）
+
+* 药品
+
+  * 勺子可以在药瓶中右键拾取药，并在试管中右键放置
+
 ### 运行逻辑
 
 * 电脑上可VR模拟器操作，按[alt]在控制视角和控制手柄模式间切换，控制手柄时按[tab]进行手的切换。

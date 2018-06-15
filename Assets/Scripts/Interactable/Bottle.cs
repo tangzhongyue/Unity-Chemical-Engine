@@ -7,10 +7,7 @@ public class Bottle : MonoBehaviour {
     [Tooltip("This variable decides how fast the water surface decrease")]
     public float collectVelocity = 1.0f;
 
-    [HideInInspector]
-    public  bool pipeIn = false;
-
-    private bool isCollecting = true;
+    private bool isCollecting = false;
     private float height = 1.0f;
 
     public void StartCollecting()
@@ -25,7 +22,7 @@ public class Bottle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (pipeIn && isCollecting)
+		if (isCollecting)
         {
             height -= collectVelocity * Time.deltaTime * 0.3f;
             if (height < 0f)
