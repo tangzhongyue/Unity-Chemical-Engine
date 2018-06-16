@@ -4,27 +4,26 @@
 
     public class PipeTrigger : MonoBehaviour {
 
-        void Start()
-        {
-        }
+        public bool doPresentation = false;
+        public bool isGood = true;
+        [HideInInspector]
+        public bool airComing = false;
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.name == "bottle")
+            if ((airComing || doPresentation) && isGood && other.name == "bottle")
             {
                 Bottle bottle = other.GetComponent<Bottle>();
                 bottle.StartCollecting();
-                Debug.Log("PipeTrigger: in Bottle");
             }
         }
 
         void OnTriggerExit(Collider other)
         {
-            if (other.name == "bottle")
+            if ((airComing || doPresentation) && isGood && other.name == "bottle")
             {
                 Bottle bottle = other.GetComponent<Bottle>();
                 bottle.StopCollecting();
-                Debug.Log("PipeTrigger: out Bottle");
             }
         }
     }

@@ -10,6 +10,7 @@
         private bool hasPowder = false;
         private GameObject myPowder;
         private GameObject tubePowder;
+        private GameObject faker;
 
         void OnTriggerEnter(Collider other)
         {
@@ -21,6 +22,7 @@
             {
                 inTube = true;
                 tubePowder = other.transform.Find("powder").gameObject;
+                faker = other.transform.Find("faker").gameObject;
             }
         }
 
@@ -34,6 +36,7 @@
             {
                 inTube = false;
                 tubePowder = null;
+                faker = null;
             }
         }
 
@@ -49,6 +52,7 @@
             {
                 myPowder.SetActive(false);
                 tubePowder.SetActive(true);
+                faker.SetActive(false);
                 hasPowder = false;
             }
         }

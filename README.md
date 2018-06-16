@@ -2,6 +2,25 @@
 
 This is SJTU Game Programming final based on Unity & VRTK.
 
+### 6.16更新 - API
+
+- 查气密性：
+  - ironStandComplex.tube.faker用于空气热胀冷缩的虚假反应物，在加热时产生气体
+  - ironStandComplex.pipe&plug group是导管组，其中`PipeTrigger.cs`脚本中
+    - `bool isGood`表示这个导管是否漏气
+    - `bool doPresentation`勾选后会在连接集气瓶时直接触发集气瓶的收集函数
+  - 集气瓶可以移动，当瓶口与导管接触时，导管才会触发集气瓶的集气函数`StartCollecting()`，所以此时应该将集气瓶移开。
+- 装药品：
+  - 勺子去药瓶中右键可拾取药品，再在试管中右键放置药品，此时会tube.powder.`SetActive(true)`，此模型用于挂载高锰酸钾化学反应脚本
+- 预热：
+  - 酒精灯只能用左手拿。火焰与试管中的三个碰撞体需各自连续接触1s以上才能成功。通过调用`HeatingCheckpoint.CheckHeating()`获取预热是否成功。
+- 试管炸裂：
+  - ironStandComplex.tubeBreak - `TubeExplode.cs`
+    - `Explode()`触发爆炸
+    - `bool doPresentation`勾选后会在场景运行1s后试管爆炸
+- 集气：
+  - 当导管与集气瓶口接触时，设置导管`PipeTrigger.airComing = true`，则集气瓶中液面开始下降。
+
 ### 6.14 更新
 
 * 因为桌子放不下了，所以器材在场景中分为equipments-1(之前的器材), equipments-2(高锰酸钾器材)
@@ -16,7 +35,7 @@ This is SJTU Game Programming final based on Unity & VRTK.
   * 安装：在试管中装棉花、导管，在集气瓶上盖盖玻片
   * Note: 碰撞体有点多，移动物体的时候可能会把其他东西挤飞
 
-* 酒精灯、试管因为碰撞体冲突的原因，**只能用左手拾取**
+* **酒精灯、试管因为碰撞体冲突的原因，只能用左手拾取**
 
 * 改变材质颜色Tip：可以不用多个透明模型进行叠加，可以在脚本中改变MeshRenderer属性
 
@@ -32,19 +51,3 @@ This is SJTU Game Programming final based on Unity & VRTK.
 * 药品
 
   * 勺子可以在药瓶中右键拾取药，并在试管中右键放置
-
-### 运行逻辑
-
-* 电脑上可VR模拟器操作，按[alt]在控制视角和控制手柄模式间切换，控制手柄时按[tab]进行手的切换。
-* 用手柄碰到可交互物体时周围有黄线提示（似乎Mac上是黑黑的，之后再解决吧），碰到化学物质会显示名称，鼠标左键可以拿起来，再按左键放下，鼠标右键触发使用。
-* 把铜块放进烧杯中溶液之后，会触发UCE_Chemical.cs中的OnTriggerEnter脚本，调用UCE_Engine输入反应物质，获取反应效果，然后调用UCE_Animation显示动画（现在是铜块消失，烧杯里水减半）
-
-* 滴管可以通过[使用]在试管中吸取溶液，并放入烧杯中，实现烧杯溶液的切换（**目前效果并不是融合，而是切换**）。
-* 火柴可以通过在火柴盒右侧快速移动点燃，通过[使用]进行熄灭，靠近打开的酒精灯后可以点燃，盖上盖子可以熄灭酒精灯。
-
-### 实现细节
-
-* VRTK的可交互物体通过Window->VRTK->Setup Interactable Object进行配置（自己挨个挂脚本也可以），默认是手柄碰到时变色，如果想要碰到时使用边缘线提示，还要加VRTK_Outline Object Copy Highlighter脚本。
-
-* 酒精灯盖使用了VRTK Snap Drop Zone保证了酒精灯盖只能放在酒精灯上的特定位置。还加入了Spring弹簧，使得触发Snap时能够有放下盖子的动画。
-* 报错应该只有一个OpenVR Error，猜测需要安装steam上的steam VR并佩戴VR设备才能解决。
