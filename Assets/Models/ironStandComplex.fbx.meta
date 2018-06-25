@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 5ba256ca6ac282646811a725cf3b6d4e
+timeCreated: 1528291208
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: beaker
+    100002: beakerWaterDown
+    100004: beakerWaterUp
+    100006: bowl
+    100008: bowlWater
+    100010: cutton
+    100012: Down
+    100014: //RootNode
+    100016: metal
+    100018: pipe
+    100020: plug
+    100022: Pole
+    100024: Support
+    100026: Track
+    100028: tube
+    400000: beaker
+    400002: beakerWaterDown
+    400004: beakerWaterUp
+    400006: bowl
+    400008: bowlWater
+    400010: cutton
+    400012: Down
+    400014: //RootNode
+    400016: metal
+    400018: pipe
+    400020: plug
+    400022: Pole
+    400024: Support
+    400026: Track
+    400028: tube
+    2100000: "\u6750\u8D28"
+    2100002: Glass
+    2100004: Water Calm
+    2100006: Wood Planks 07
+    2100008: No Name
+    2100010: Metal Parts
+    2300000: beaker
+    2300002: beakerWaterDown
+    2300004: beakerWaterUp
+    2300006: bowl
+    2300008: bowlWater
+    2300010: cutton
+    2300012: Down
+    2300014: pipe
+    2300016: plug
+    2300018: Pole
+    2300020: Support
+    2300022: Track
+    2300024: tube
+    3300000: beaker
+    3300002: beakerWaterDown
+    3300004: beakerWaterUp
+    3300006: bowl
+    3300008: bowlWater
+    3300010: cutton
+    3300012: Down
+    3300014: pipe
+    3300016: plug
+    3300018: Pole
+    3300020: Support
+    3300022: Track
+    3300024: tube
+    4300000: cutton
+    4300002: bowl
+    4300004: bowlWater
+    4300006: beakerWaterUp
+    4300008: beakerWaterDown
+    4300010: beaker
+    4300012: plug
+    4300014: pipe
+    4300016: tube
+    4300018: Track
+    4300020: Support
+    4300022: Pole
+    4300024: Down
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

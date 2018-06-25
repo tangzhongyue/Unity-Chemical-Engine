@@ -53,7 +53,7 @@
                     beakerWaterGo.GetComponent<Renderer>().material = waterGo.GetComponent<Renderer>().material;
 
                     ShowNameOnTouch snot = beakerWaterGo.GetComponent<ShowNameOnTouch>();
-                    snot.changeName(newName);
+                    snot.ChangeName(newName);
 
                     beakerWaterGo.SetActive(true);
                 }

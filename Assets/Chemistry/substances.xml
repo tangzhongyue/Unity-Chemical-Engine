@@ -2,21 +2,21 @@
   <substance>
 <!-- metal -->
   <Fe type="solid">
-    <color>FeMaterial</color>
+    <material>FeMaterial</material>
     <reactionTag>Fe_Hp</reactionTag>
   </Fe>
 
   <Fe2p type="ion">
-    <color>0:255:0:100</color>
+    <color>0:255:0:7</color>
     <reactionTag>Fe2p_O2_Hp</reactionTag>
   </Fe2p>
     
   <Fe3p type="ion">
-    <color>255:255:0:100</color>
+    <color>255:0:0:8</color>	
   </Fe3p>
   
   <Al type="solid">
-    <color>AlMaterial</color>
+    <material>AlMaterial</material>
     <reactionTag>Al_Hp</reactionTag>
   </Al>
   
@@ -71,7 +71,7 @@
   
  <Fe_Hp condition="liquid">
    <startTemperature>0</startTemperature>
-   <rateConstant>0.00001</rateConstant>
+   <rateConstant>0.01</rateConstant>
    <tempConstant>0.1</tempConstant>
    <reactant rate="1" type="solid">Fe</reactant>
    <reactant rate="2" type="liquid">Hp</reactant>
@@ -81,7 +81,7 @@
 
  <Fe2p_O2_Hp condition="liquid">
    <startTemperature>0</startTemperature>
-   <rateConstant>0.00001</rateConstant>
+   <rateConstant>0.003</rateConstant>
    <tempConstant>0.1</tempConstant>
    <reactant rate="4" type="liquid">Hp</reactant>
    <reactant rate="4" type="liquid">Fe2p</reactant>
@@ -95,7 +95,7 @@
     </HCl_Solve>
     <H2O2_Decompose>
       <startTemperature>60</startTemperature>
-      <rateConstant>0.00001</rateConstant>
+      <rateConstant>0.01</rateConstant>
       <tempConstant>0.1</tempConstant>
       <condition>heat</condition>
       <condition>liquid</condition>

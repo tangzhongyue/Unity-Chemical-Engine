@@ -13,11 +13,16 @@
         public Type type;
         public float boilingPoint = 100;
 
-        private bool isHeating = false;
-        private float temperature = 20;
+        [HideInInspector]
+        public float temperature = 20;
+        [HideInInspector]
+        public Vector3 position;
+        [HideInInspector]
+        public bool isHeating = false;
+
         private UCE_Heatable childHeatable;
 
-        private static float heatConst = 20f;
+        private static float heatConst = 10f;
         private static float coolConst = 10f;
 
         public void SetFire()
@@ -68,7 +73,6 @@
                 UCE_Heatable heatable = other.GetComponent<UCE_Heatable>();
                 if (heatable)
                 {
-                    //Debug.Log(name + " Lost heatee " + other.name);
                     heatable.isHeating = false;
                     childHeatable = null;
                 }
@@ -78,6 +82,11 @@
         void Start()
         {
             temperature = UCE_Global.env_temperature;
+            if (type == Type.Burner)
+            {
+                position = gameObject.transform.position;
+                UCE_Global.Register(this);
+            }
         }
 
         void Update()
@@ -89,7 +98,6 @@
                     if (temperature < boilingPoint)
                     {
                         temperature += Time.deltaTime * heatConst;
-                        Debug.Log(name + " Heat Temperature: " + temperature);
                     }
                 }
                 else if (temperature < UCE_Global.env_temperature - 0.01f)
@@ -99,7 +107,6 @@
                 else if (temperature > UCE_Global.env_temperature + 0.01f)
                 {
                     temperature -= Time.deltaTime * coolConst;
-                    Debug.Log(name + " Cool Temperature: " + temperature);
                 }
             }
         }
