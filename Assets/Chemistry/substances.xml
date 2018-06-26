@@ -48,9 +48,9 @@
     <color>255:255:255:0</color>
   </H2O>
 
-    <HCl type="solid">
+    <HCl type="liquid">
       <color>255:255:255:0</color>
-      <reactionTag>KMnO4_HCI</reactionTag>
+      <reactionTag>KMnO4_HCl</reactionTag>
     </HCl>
 
     <Clm type="liquid">
@@ -65,7 +65,7 @@
   <KMnO4 type="solid">
     <color>48:0:119:255</color>
     <reactionTag>KMnO4_Decompose</reactionTag>
-    <reactionTag>KMnO4_HCI</reactionTag>
+    <reactionTag>KMnO4_HCl</reactionTag>
   </KMnO4>
     
   <MnO2 type="solid">
@@ -76,9 +76,9 @@
       <color>0:0:0:255</color>
     </K2MnO4>
     
-    <KCI type="liquid">
+    <KCl type="liquid">
       <color>255:255:255:255</color>
-    </KCI>
+    </KCl>
     
     <MnCl2 type="liquid">
       <color>255:255:255:255</color>
@@ -93,7 +93,8 @@
       <color>255:255:255:255</color>
     </C5H11O5COOH>
     
-    <H2SO4 type="liquid">
+    <H2SO4 type="solid">
+      <color>255:255:255:255</color>
       <reactionTag>CXX_KClO3</reactionTag>
     </H2SO4>
     
@@ -152,12 +153,6 @@
    <product rate="2" type="liquid">H2O</product>
  </Fe2p_O2_Hp>
     
-    <HCl_Solve>
-      <reactant rate="1" type="solid">HCl</reactant>
-      <product rate="1" type="liquid">Hp</product>
-      <product rate="1" type="liquid">Clm</product>
-    </HCl_Solve>
-    
     <H2O2_Decompose condition="liquid">
       <startTemperature>60</startTemperature>
       <rateConstant>0.01</rateConstant>
@@ -177,24 +172,27 @@
       <product rate="1" type="gas">O2</product>
     </KMnO4_Decompose>
   
-    <KMnO4_HCI condition="liquid">
+    <KMnO4_HCl condition="liquid">
       <startTemperature>0</startTemperature>
       <rateConstant>0.01</rateConstant>
       <tempConstant>0.1</tempConstant>
-      <stopConcentration reactant="HCI">0.5</stopConcentration>
+      <stopConcentration reactant="HCl">10</stopConcentration>
       <reactant rate="2" type="solid">KMnO4</reactant>
-      <reactant rate="16" type="liquid">HCI</reactant>
+      <reactant rate="16" type="liquid">HCl</reactant>
       <product rate="2" type="liquid">MnCl2</product>
       <product rate="2" type="liquid">KCl</product>
       <product rate="8" type="liquid">H2O</product>
       <product rate="5" type="gas">Cl2</product>
-    </KMnO4_HCI>
-  
+    </KMnO4_HCl>
+
     <CXX_KClO3 condition="air">
       <phenomenon>Explode</phenomenon>
+      <startTemperature>0</startTemperature>
+      <rateConstant>0.01</rateConstant>
+      <tempConstant>0.1</tempConstant>
       <reactant type="solid" rate="3">C5H11O5CHO</reactant>
       <reactant type="solid" rate="1">KClO3</reactant>
-      <reactant type="liquid" rate="0">H2SO4</reactant>
+      <reactant type="solid" rate="0">H2SO4</reactant>
       <product type="solid" rate="3">C5H11O5COOH</product>
       <product type="solid" rate="3">KCl</product>
     </CXX_KClO3>
@@ -203,7 +201,7 @@
       <startTemperature>0</startTemperature>
       <rateConstant>0.01</rateConstant>
       <tempConstant>0.1</tempConstant>
-      <pressureConstant>0.1</pressureConstant>
+      <pressureConstant>-0.013</pressureConstant>
       <reactant type="gas" rate="2">NO2</reactant>
       <product type="gas" rate="1">N2O4</product>
     </NO2_Compound>
@@ -212,7 +210,7 @@
       <startTemperature>0</startTemperature>
       <rateConstant>0.01</rateConstant>
       <tempConstant>0.1</tempConstant>
-      <pressureConstant>-0.1</pressureConstant>
+      <pressureConstant>0.003</pressureConstant>
       <reactant type="gas" rate="1">N2O4</reactant>
       <product type="gas" rate="2">NO2</product>
     </N2O4_Decompose>
