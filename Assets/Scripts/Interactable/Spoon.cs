@@ -22,7 +22,7 @@
             {
                 inTube = true;
                 tubePowder = other.transform.Find("powder").gameObject;
-                faker = other.transform.Find("faker").gameObject;
+                faker = other.transform.Find("heating faker").gameObject;
             }
         }
 
@@ -40,6 +40,12 @@
             }
         }
 
+        public override void StartTouching(VRTK_InteractTouch currentTouchingObject = null)
+        {
+            base.StartTouching(currentTouchingObject);
+            TipBoard.Progress(1, 1);
+        }
+
         public override void StartUsing(VRTK_InteractUse usingObject = null)
         {
             base.StartUsing(usingObject);
@@ -47,6 +53,7 @@
             {
                 myPowder.SetActive(true);
                 hasPowder = true;
+                TipBoard.Progress(1, 2);
             }
             else if (inTube && hasPowder)
             {
@@ -54,6 +61,7 @@
                 tubePowder.SetActive(true);
                 faker.SetActive(false);
                 hasPowder = false;
+                TipBoard.Progress(1, 3);
             }
         }
 
