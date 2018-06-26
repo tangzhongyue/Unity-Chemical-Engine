@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red245\green120\blue0;\red51\green153\blue0;
+\red204\green0\blue203;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww24080\viewh17800\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\b\fs24 \cf0 Cruncher API
+\b0 \
+Cruncher has a built-in API you can use to reduce your own meshes. This document describes what you need to know. I'll do my best to answer questions you might have, but at this time it is an "unsupported" feature, meaning that it is the same API I use so it's maintained and used, but it requires the user to know scripting in Unity pretty well to use.\
+\
+
+\b Step 1: Create an instance of the CruncherIO class and fill out it's fields.
+\b0 \
+\
+The CrunchIO class  contains two classes:\
+\
+\pard\pardeftab720
+
+\f1 \cf2 using\cf0  UnityEngine;\
+\cf2 using\cf0  System.Collections;\
+\
+\cf3 #if (CRUNCHER_ASSEMBLY == true)\
+\cf2 namespace\cf0  CruncherPlugin\
+\{\
+\cf3 #endif\
+\cf0 	\cf4 //------------------------------------------------------------------------------\
+\cf0 	\cf4 // class definition\
+\cf0 	\cf4 //------------------------------------------------------------------------------\
+\cf0 	\cf2 public\cf0  \cf2 class\cf0  CruncherAdjustment\
+	\{\
+		\cf2 public\cf0  \cf2 enum\cf0  Type \{ TargetQuality, TargetQuantity \};\
+		\cf2 public\cf0  CruncherAdjustment.Type type;\
+		\cf2 public\cf0  \cf2 float\cf0  quality;\
+		\cf2 public\cf0  \cf2 int\cf0  quantity;\
+	\}	\
+	\
+	\cf4 //------------------------------------------------------------------------------\
+\cf0 	\cf4 // class definition\
+\cf0 	\cf4 //------------------------------------------------------------------------------\
+\cf0 	\cf2 public\cf0  \cf2 class\cf0  CruncherIO\
+	\{\
+		\cf4 // core mesh data\
+\cf0 		\cf2 public\cf0  \cf2 Vector3\cf0 [] vertices;\
+		\cf2 public\cf0  \cf2 int\cf0 [] triangles;\
+		\cf2 public\cf0  \cf2 Vector3\cf0 [] normals;\
+		\cf2 public\cf0  \cf2 Vector2\cf0 [] uv0s;\
+		\cf2 public\cf0  \cf2 Vector2\cf0 [] uv1s;\
+		\cf2 public\cf0  \cf2 Color\cf0 [] colors;\
+		\cf2 public\cf0  \cf2 BoneWeight\cf0 [] boneWeights;\
+		\cf2 public\cf0  \cf2 Vector4\cf0 [] tangents;\
+		\cf2 public\cf0  \cf2 Matrix4x4\cf0 [] bindPoses;\
+		\cf2 public\cf0  \cf2 int\cf0 [][] subMeshTriangles;\
+		\cf2 public\cf0  \cf2 int\cf0 [] originalIndexes;\
+		\cf2 public\cf0  \cf2 int\cf0 [] lockedVertices;\
+	\}\
+\cf3 #if (CRUNCHER_ASSEMBLY == true)\
+\cf0 \}  \cf4 // namespace CruncherPlugin\
+\cf3 #endif\
+\pard\pardeftab720
+
+\f0 \cf0 \
+You "new" the CruncherIO class and then fill it out. As you can see it's similar to a Unity Mesh. The difference is this one can take any number of polygons, verts, etc. and isn't bound by 65K limit.\
+\
+\pard\pardeftab720
+
+\f1 \cf0 	CruncherIO cruncherIO = \cf2 new\cf0  CruncherIO();\
+\pard\pardeftab720
+
+\f0 \cf0 \
+
+\b Step 2: Call AddMesh and pass in the CruncherIO class you created.
+\b0 \
+\
+\pard\pardeftab720
+
+\f1 \cf0 	\cf2 int\cf0  meshId = CruncherPluginManager.AddMesh(cruncherIO);\
+\pard\pardeftab720
+
+\f0 \cf0 \
+
+\b Step 3: Call AdjustMeshes as needed to modify it.
+\b0 \
+\
+\pard\pardeftab720
+
+\f1 \cf0 	CruncherAdjustment cruncherAdjustment = \cf2 new\cf0  CruncherAdjustment();\
+	cruncherAdjustment.type = CruncherAdjustment.Type.TargetQuality;\
+	cruncherAdjustment.quality = \cf2 0.5f\cf0 ;\
+	\cf2 if\cf0 (CruncherPluginManager.AdjustMeshes(cruncherAdjustment) == \cf5 true\cf0 )\
+	\{\
+		\cf4 // save new quality setting\
+\cf0 		\cf2 int\cf0  quality = cruncherAdjustment.quality;\
+		\cf2 int\cf0  quantity = cruncherAdjustment.quantity;\
+		\cf3 #if LOG_EXTRA_INFO\
+\cf0 		\cf2 Debug\cf0 .Log(\cf5 "INFO: "\cf0  + meshGroup.meshGo.name + \cf5 " Post-AdjustMeshes Quality="\cf0  + quality + \cf5 ", Quantity="\cf0  +  quantity);\
+		\cf3 #endif\
+\cf0 	\}\
+\pard\pardeftab720
+
+\f0 \cf0 \
+Note that the quality or quantity that you want may not be exactly possible, so Cruncher will modify the values passed into it by the actual result achieved as shown above.\
+\
+
+\b Step 4: Call RetrieveMesh to get out the reduced mesh.
+\b0 \
+\
+\pard\pardeftab720
+
+\f1 \cf0 	CruncherIO cruncherIO = CruncherPluginManager.RetrieveMesh(meshId);\
+\pard\pardeftab720
+
+\f0 \cf0 \
+And then you can fish out whatever you need from the cruncherIO object that is returned. Note this method allows returning the original index remappings so if you have extra user data such as skinning info, colors, or other meta-data you can get the original indexes back in the CruncherIO class returned by setting the last parameter to true.\
+\
+\pard\pardeftab720
+
+\f1 \cf0 	\cf2 static\cf0  \cf2 public\cf0  CruncherIO RetrieveMesh(\cf2 int\cf0  meshId, \cf2 bool\cf0  retrieveOriginalIndexes = \cf5 false\cf0 )\
+\
+}
