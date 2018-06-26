@@ -4,10 +4,10 @@
 
     public class Bottle : MonoBehaviour
     {
-
+        
         [Tooltip("This variable decides how fast the water surface decrease")]
-        public float collectConst = 0.5f;
-
+        public float collectVelocity = 0.5f;
+	    public Obi.ObiEmitter emitter;
         private bool isCollecting = false;
         private float height = 1.0f;
 
@@ -24,9 +24,10 @@
         // ideal input: 0.3/s
         public void AddAir(float amount)
         {
-            height -= amount * collectConst;
+            height -= amount * collectVelocity;
             if (height < 0f)
             {
+                emitter.speed = 0.5f * collectVelocity;
                 height = 0f;
                 isCollecting = false;
                 transform.Find("bottleWaterUp").gameObject.SetActive(false);

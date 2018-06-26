@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameCount: 6
+  startStepNumber: 0
   steps:
   - title: "\u67E5\u6C14\u5BC6\u6027"
     substeps:
@@ -665,7 +666,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872d46ce7404efc4ab99058735df530e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectConst: 0.3
+  collectVelocity: 0.5
+  emitter: {fileID: 0}
 --- !u!65 &56035180
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5385,7 +5387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &626340131
 Transform:
   m_ObjectHideFlags: 0
@@ -8167,7 +8169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872d46ce7404efc4ab99058735df530e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectConst: 0.3
+  collectVelocity: 0.5
+  emitter: {fileID: 0}
 --- !u!114 &931468181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9688,7 +9691,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ec5147605b0e4174e8bbace5bc26f169, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ec5147605b0e4174e8bbace5bc26f169, type: 3}
       propertyPath: m_LocalScale.x
@@ -12394,7 +12397,7 @@ Transform:
   m_LocalScale: {x: 0.05000003, y: 0.006000004, z: 0.05}
   m_Children: []
   m_Father: {fileID: 1905434048}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1380708354
 MonoBehaviour:
@@ -17674,8 +17677,8 @@ Transform:
   m_Children:
   - {fileID: 368619557}
   - {fileID: 736158842}
-  - {fileID: 588951064}
   - {fileID: 1380708353}
+  - {fileID: 588951064}
   - {fileID: 5893061}
   - {fileID: 1447993754}
   - {fileID: 729338794}

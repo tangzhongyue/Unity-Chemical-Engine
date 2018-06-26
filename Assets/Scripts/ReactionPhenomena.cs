@@ -51,7 +51,6 @@ public class ReactionPhenomena : MonoBehaviour {
 			GameObject gasCreater = (GameObject)substance.gasCreater[gass.IndexOf(gas)];
 			if (gasCreater != null)
 			{
-				gas.GetComponent<Bubbles>().MoveBubblesToNewPosition(gasCreater.transform);
 				gas.GetComponent<Bubbles>().Emit(reactionAmount);
 			}
 			else{
