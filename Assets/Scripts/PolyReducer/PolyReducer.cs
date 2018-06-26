@@ -10,12 +10,35 @@ namespace PolyReduction
         // Use this for initialization
         void Start()
         {
+            //init the mesh? [TODO]
+            if (meshToGenerate == null)
+                meshToGenerate = GetComponent<MeshFilter>().mesh;
+            meshToGenerate = Object.Instantiate<Mesh>(meshToGenerate);
+            DeleteDup();
             Generate();
         }
 
-        // Update is called once per frame
+        //Update is called once per frame
         void Update()
         {
+            //reductionData.Clear();
+            //collapse vertex with the least 'collapsePerFrame' cost 
+            for (int zx = 0; zx < collapsePerFrame; zx++)
+            {
+                PRVertex mn = MinimunCostEdge();
+                Collapse(mn, mn.collapse);
+                vertexNum--;
+            }
+
+            //what dose ReductionData do? [TODO]
+            for (; deleteIndex < reductionData.Count; deleteIndex++)
+            {
+                ApplyData(reductionData[deleteIndex]);
+            }
+            //update the mesh
+            meshToGenerate.vertices = vertices;
+            meshToGenerate.triangles = triangles;
+            GetComponent<MeshFilter>().mesh = meshToGenerate;
 
         }
 
@@ -26,35 +49,72 @@ namespace PolyReduction
         private PRVertex[] prVertices;
         private PRTriangle[] prTriangle;
         private int vertexNum = 0;
+        private int deleteIndex = 0;
         private List<ReductionData> reductionData = new List<ReductionData>();
 
         public int collapsePerFrame = 60;
 
+        
+        void DeleteDup()
+        {
+            vertices = meshToGenerate.vertices;
+            triangles = meshToGenerate.triangles;
+            vertexNum = vertices.Length;
+            //vector3 - 
+            Hashtable pos_point_map = new Hashtable();
+            Vector3[] point_pos_map = new Vector3[vertices.Length];
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if(!pos_point_map.Contains(vertices[i]))
+                    pos_point_map.Add(vertices[i], i);
+                point_pos_map[i] = vertices[i];
+                
+            }
+
+            for(int i = 0; i < triangles.Length; i++)
+            {
+                triangles[i] = (int)pos_point_map[point_pos_map[triangles[i]]];
+            }
+            //Vector3[] vertices_distinct;
+            //for (int i = point_pos_map.Length - 1; i >= 0; i--)
+            //{
+            //    if((int)pos_point_map[point_pos_map[i]] != i)
+            //        vertices.
+            //}
+            meshToGenerate.triangles = triangles;
+            GetComponent<MeshFilter>().mesh = meshToGenerate;
+        }
+
         //process the mesh
         void Generate()
-        {
-            //init the mesh? [TODO]
-            if (meshToGenerate == null)
-                meshToGenerate = GetComponent<MeshFilter>().mesh;
-            meshToGenerate = Object.Instantiate<Mesh>(meshToGenerate);
-
+        { 
             vertices = meshToGenerate.vertices;
             triangles = meshToGenerate.triangles;
             normals = meshToGenerate.normals;
             vertexNum = vertices.Length;
+            Debug.Log(triangles.Length);
             prVertices = new PRVertex[vertices.Length];
             prTriangle = new PRTriangle[triangles.Length / 3];
             int i;
             int j;
+            Hashtable pointMap = new Hashtable();
             //init the vertexes
             for (i = 0; i < vertices.Length; i++)
             {
+                //if (pointMap.Contains(vertices[i]))
+                //    prVertices[i] = prVertices[(int)pointMap[vertices[i]]];
+                //else
+                //{
+                //    prVertices[i] = new PRVertex(i, vertices[i]);
+                //    pointMap.Add(vertices[i], i);
+                //}
                 prVertices[i] = new PRVertex(i, vertices[i]);
             }
             //init the faces
             for (i = 0, j = 0; i < triangles.Length; i += 3, j += 1)
             {
                 prTriangle[j] = new PRTriangle(i, prVertices[triangles[i]], prVertices[triangles[i + 1]], prVertices[triangles[i + 2]]);
+                //Debug.Log(triangles[i] + " " + triangles[i + 1] + " " + triangles[i + 2]);
             }
             //update the neighbour faces of 3 vertex of a triangle 
             for (i = 0; i < prTriangle.Length; i++)
@@ -90,14 +150,15 @@ namespace PolyReduction
             }
 
             //what dose ReductionData do? [TODO]
-            for (int C6H14O2 = 0; C6H14O2 < reductionData.Count; C6H14O2++)
+            for (; deleteIndex < reductionData.Count; deleteIndex++)
             {
-                ApplyData(reductionData[C6H14O2]);
+                ApplyData(reductionData[deleteIndex]);
             }
             //update the mesh
             meshToGenerate.vertices = vertices;
             meshToGenerate.triangles = triangles;
             GetComponent<MeshFilter>().mesh = meshToGenerate;
+
         }
         //tranverse all the data to find the vertex with the least cost [TODO] [can be optimized]
         public PRVertex MinimunCostEdge()

@@ -1,0 +1,28 @@
+v1.08
+* Fixed a rare case where the plugin can't be found because of a problem with the user's PATH variable on Windows. Changed it so that the plugin path is prepended to the process PATH instead of appended so that user PATH problems don't effect Cruncher.
+
+v1.07
+* Fixed 2 serialization bugs that have been there since v1.0. Fixed a case where you were prompted to Apply or Discard unsaved changes when you didn't make any change.
+
+v1.06
+* Added mesh configuration options to fix t-junctions, merge vertices, normals, UVs and recalculate normals after conversion.
+
+v1.05
+* Rebuilt in Unity 3.5.6 instead of Unity 4.0 so that it loads without warnings in all versions of Unity. Also rebuilt the Windows plugin using VS 2010 instead of 2012 to solve some cases where the plugin cannot run.
+
+v1.04
+* Another bug relating to the relationship between the orignal mesh data and the reduced mesh data was fixed in the core Balancer library that caused some skinned meshes crash Unity.
+
+v1.03
+* A bug relating to the relationship between the orignal mesh data and the reduced mesh data was fixed in the core Balancer library that caused some skinned meshes to look corrupted when they got out of sync.
+
+v1.02
+* Fixed situations where a naming collision could occur in meshes with lots of child meshes.
+* Meshes that cannot be reduced to below Unity's 65,000 vertice or triangle limit will be skipped.
+
+v1.01
+* Fixed an issue where the normals weren't correctly saved, causing the model to look wrong when lit.
+* Fixed an issue when processing meshes with child mesh hierarchies that caused Cruncher to think that the mesh had changed, when it hadn't, and so it keeps asking the user to accept or revert changes.
+
+v1.0
+Initial version

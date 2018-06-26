@@ -246,7 +246,7 @@ public class ReactionSystem : MonoBehaviour
 		res[3] = float.Parse(rgba[3]);
 		return res;
 	}
-
+    
 	GameObject CreateNewSubstance(substanceType type, Transform t, Mesh mesh, Material mat, float[] color)
 	{
 		GameObject new_obj = Instantiate(objPrefabs[(int)type]);
