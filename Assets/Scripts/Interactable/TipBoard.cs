@@ -14,10 +14,11 @@
         }
 
         public int frameCount = 7;
+        public int startStepNumber = 0;
         public List<Step> steps;
 
         // sn: step number, ssn: substep number
-        private static int sn = 2, ssn = 0;
+        private static int sn = 0, ssn = 0;
         private static TipBoard tb;
         private static TextMesh textMesh, warningMesh;
         private static string title, content;
@@ -80,6 +81,7 @@
             tb = this;
             textMesh = transform.Find("content").GetComponent<TextMesh>();
             warningMesh = transform.Find("warning").GetComponent<TextMesh>();
+            sn = startStepNumber;
             UpdateText();
         }
 

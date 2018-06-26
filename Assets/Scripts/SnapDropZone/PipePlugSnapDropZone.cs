@@ -12,7 +12,7 @@
             AirTransmit air = transform.parent.GetComponent<AirTransmit>();
             AirTransmit.Connect(air, e.snappedObject.GetComponent<AirTransmit>());
             TipBoard.Progress(0, 0);
-            TipBoard.Progress(1, 4);
+            TipBoard.Progress(1, 5);
         }
 
         public override void OnObjectUnsnappedFromDropZone(SnapDropZoneEventArgs e)
