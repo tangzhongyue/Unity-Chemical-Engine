@@ -10,11 +10,10 @@ public class Bubbles : MonoBehaviour
 	public Obi.ObiEmitter emitter;
 	public Obi.ObiSolver solver;
 	public GameObject gasParticle;
+	// Use this for initialization
 	void Start()
 	{
-		
 		solver = GameObject.Find("Solver").GetComponent<Obi.ObiSolver>();
-
 		//emitter.Solver = solver;
 		emitter.Solver = solver;
 		emitter.enabled = true;
@@ -29,15 +28,27 @@ public class Bubbles : MonoBehaviour
 
 	}
 
-	public void Emit(float amount) {
-		if(!color.Equals(new Color(0,0,0,0)))
-		   gasParticle.GetComponent<ParticleSystem>().Play();
+	public void MoveEimtter(Vector3 position)
+	{
+		emitter.transform.position = position;
+	}
+
+	public void Emit(float amount)
+	{
+		if (!color.Equals(new Color(0, 0, 0, 0)) && !gasParticle.GetComponent<ParticleSystem>().isPlaying) { 
+			gasParticle.GetComponent<ParticleSystem>().Play();
+		gasParticle.GetComponent<Obi.ParticleAdvector>().enabled = true;
+		}
+			
 		emitter.speed = amount * 100;
 	}
 
 	public void StopBubbles()
 	{
+
+		gasParticle.GetComponent<Obi.ParticleAdvector>().enabled = false;
 		gasParticle.GetComponent<ParticleSystem>().Stop();
+		gasParticle.GetComponent<ParticleSystem>().Clear();
 		emitter.speed = 0;
 	}
 }
