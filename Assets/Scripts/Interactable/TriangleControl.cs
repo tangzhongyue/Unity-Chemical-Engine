@@ -2,8 +2,7 @@
 {
     using UnityEngine;
     using VRTK;
-
-    // TODO: wait a few seconds and put off fire
+    
     public class TriangleControl : VRTK_InteractableObject
     {
         public enum ControlType : int { Temperature, Pressure };

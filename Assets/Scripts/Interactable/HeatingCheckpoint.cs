@@ -44,7 +44,7 @@
             if (isTouching && Time.time - lasttime > 0.999f && !hasTouched)
             {
                 hasTouched = true;
-                cnt++;
+                TipBoard.Progress(2, cnt++);
                 Debug.Log("Heating Checkpoint cnt = " + cnt.ToString());
             }
         }

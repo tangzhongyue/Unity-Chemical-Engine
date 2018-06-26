@@ -5,9 +5,21 @@ using UnityEngine;
 public class Bubbles : MonoBehaviour
 {
 	float volume = 0.0f;
+	public Color color;
+	// Use this for initialization
+	public Obi.ObiEmitter emitter;
+	public Obi.ObiSolver solver;
+	public GameObject gasParticle;
 	// Use this for initialization
 	void Start()
 	{
+		solver = GameObject.Find("Solver").GetComponent<Obi.ObiSolver>();
+		//emitter.Solver = solver;
+		emitter.Solver = solver;
+		emitter.enabled = true;
+		emitter.Awake();
+		gasParticle.GetComponent<Obi.ParticleAdvector>().solver = solver;
+		solver.maxParticles += emitter.NumParticles;
 	}
 
 	// Update is called once per frame
@@ -16,22 +28,27 @@ public class Bubbles : MonoBehaviour
 
 	}
 
-	public void Emit(float amount) {
-		volume += amount;
-		GetComponent<ParticleSystem>().Emit((int)(volume * 1000));
-		volume -= (float)((int)(volume * 1000)) / 1000;
+	public void MoveEimtter(Vector3 position)
+	{
+		emitter.transform.position = position;
 	}
 
-	public void MoveBubblesToNewPosition(Transform t) {
-		float yoffset = t.position.y - transform.position.y;
-		float newLifeTime = GetComponent<ParticleSystem>().main.startLifetime.constant - yoffset / GetComponent<ParticleSystem>().velocityOverLifetime.y.constantMax;
-		var main = GetComponent<ParticleSystem>().main;
-		main.startLifetime = newLifeTime;
-		transform.position = t.position;
+	public void Emit(float amount)
+	{
+		if (!color.Equals(new Color(0, 0, 0, 0)) && !gasParticle.GetComponent<ParticleSystem>().isPlaying) { 
+			gasParticle.GetComponent<ParticleSystem>().Play();
+		gasParticle.GetComponent<Obi.ParticleAdvector>().enabled = true;
+		}
+			
+		emitter.speed = amount * 100;
 	}
 
 	public void StopBubbles()
 	{
-		GetComponent<ParticleSystem>().Stop();
+
+		gasParticle.GetComponent<Obi.ParticleAdvector>().enabled = false;
+		gasParticle.GetComponent<ParticleSystem>().Stop();
+		gasParticle.GetComponent<ParticleSystem>().Clear();
+		emitter.speed = 0;
 	}
 }

@@ -104,7 +104,7 @@ public class ReactionSystem : MonoBehaviour
 	public double capacity = 1;
 	[Range(0, 1)]
 	public double volumn = 0.3; //L
-
+	public GameObject solutionFliud;
 
 	private Dictionary<string, reactionInfo> reactions;
 	private Dictionary<string, substanceInfo> substance;
@@ -139,7 +139,7 @@ public class ReactionSystem : MonoBehaviour
 			substance[source].amount[1] = (float)sourceAmount;
 			substance[source].concentration = sourceAmount / volumn;
 			substance[source].objects[1].Add(this.gameObject);
-			substance[source].color = new float[] { 0, 0, 0, 0 };
+			substance[source].color = GetColorFromXml(xml.SelectNodes("root/substance/" + source + "/" + "color").Item(0).InnerText);
 			XmlNodeList reactionTags = xml.SelectNodes("root/substance/" + source + "/" + "reactionTag");
 			//tranverse all the reactions whose reactants include the new substance
 			foreach (XmlElement rtag in reactionTags)
@@ -263,8 +263,15 @@ public class ReactionSystem : MonoBehaviour
 			new_obj.GetComponent<MeshFilter>().mesh = mesh;
 		if (mat != null)
 			new_obj.GetComponent<MeshRenderer>().material = mat;
-		if (type == substanceType.Liquid)
-			new_obj.GetComponent<MeshRenderer>().material.color = new Color(color[0], color[1], color[2], 0);
+		if (type == substanceType.Liquid) {
+			if (sysType == systemType.Solution)
+			{
+				new_obj.GetComponent<LiquidSimulator>().fluid = solutionFliud;
+			}
+			else {
+				new_obj.GetComponent<LiquidSimulator>().fluid = null;
+			}
+		}
 		return new_obj;
 	}
 
@@ -324,7 +331,6 @@ public class ReactionSystem : MonoBehaviour
 						if (substance[product.InnerText].objects[type_tmp].Count == 0) { 
 							GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.gameObject.transform, this.gameObject.GetComponent<MeshFilter>().mesh, this.gameObject.GetComponent<MeshRenderer>().material, substance[product.InnerText].color);
 							substance[product.InnerText].objects[type_tmp].Add(new_obj);
-
 						}
 						break;
 					}
@@ -377,8 +383,16 @@ public class ReactionSystem : MonoBehaviour
 			}
 			substance[sub.name].objects[(int)sub.type].Add(obj);
 			substance[sub.name].amount[(int)sub.type] += (float)sub.amount;
-			if (sub.type == substanceType.Liquid)
+			if (sub.type == substanceType.Liquid) {
+				if (sysType == systemType.Solution)
+				{
+					obj.GetComponent<LiquidSimulator>().fluid = solutionFliud;
+				}
+				else {
+					obj.GetComponent<LiquidSimulator>().fluid = null;
+				}
 				substance[sub.name].concentration += sub.amount / volumn;
+			}
 			Destroy(sub);
 		}
 

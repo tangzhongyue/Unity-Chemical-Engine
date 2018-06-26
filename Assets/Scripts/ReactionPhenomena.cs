@@ -23,19 +23,6 @@ public class ReactionPhenomena : MonoBehaviour {
 		}
 	}
 
-	void DrawLiquid(substanceInfo substance, float rate)
-	{
-		ArrayList liquids = substance.objects[(int)substanceType.Liquid];
-		foreach (GameObject liquid in liquids)
-		{
-			if (substance.color[3] != 0)
-			{
-				Color c = new Color(substance.color[0], substance.color[1], substance.color[2], Mathf.Min(rate / substance.color[3], 0.6f));
-				liquid.GetComponent<MeshRenderer>().material.color = c;
-			}
-
-		}
-	}
 
 	void DrawGas(substanceInfo substance, float reactionAmount) { 
 		/*ArrayList gass = substance.objects[(int)substanceType.Gas];
@@ -51,7 +38,7 @@ public class ReactionPhenomena : MonoBehaviour {
 			GameObject gasCreater = (GameObject)substance.gasCreater[gass.IndexOf(gas)];
 			if (gasCreater != null)
 			{
-				gas.GetComponent<Bubbles>().MoveBubblesToNewPosition(gasCreater.transform);
+				gas.GetComponent<Bubbles>().MoveEimtter(gasCreater.transform.position);
 				gas.GetComponent<Bubbles>().Emit(reactionAmount);
 			}
 			else{
@@ -72,7 +59,7 @@ public class ReactionPhenomena : MonoBehaviour {
 				}
 			case substanceType.Liquid:
 				{
-					DrawLiquid(substance, (float)substance.concentration);
+					//DrawLiquid(substance, (float)substance.concentration);
 					break;
 				}
 			case substanceType.Gas:
@@ -87,14 +74,61 @@ public class ReactionPhenomena : MonoBehaviour {
 	}
 
 	public void DrawPhenomena(Dictionary<string, substanceInfo> substances, reactionInfo rctInfo, Dictionary<string, float> reactionAmounts) {
+		ArrayList liquids = new ArrayList();
 		foreach (substanceInfoOfReaction sir in rctInfo.reactants)
 		{
-			DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
+			if (sir.type == substanceType.Liquid) {
+				liquids.Add(sir);
+			}
+			else DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
 		}
 		foreach (substanceInfoOfReaction sir in rctInfo.products)
 		{
-			DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
+			if (sir.type == substanceType.Liquid)
+			{
+				liquids.Add(sir);
+			}
+			else DrawSubstance(substances[sir.name], reactionAmounts[sir.name], sir.type);
 			
 		}
+		//DrawLiquids
+		ArrayList fluids = new ArrayList();
+		ArrayList colors = new ArrayList();
+		ArrayList amounts = new ArrayList();
+		foreach (substanceInfoOfReaction sir in liquids)
+		{
+			substanceInfo substance = substances[sir.name];
+			ArrayList liqs = substance.objects[(int)substanceType.Liquid];
+			foreach (GameObject liquid in liqs)
+			{
+				if (liquid.GetComponent<LiquidSimulator>().fluid == null)
+				{
+					;
+				}
+				if (!fluids.Contains(liquid.GetComponent<LiquidSimulator>().fluid))
+				{
+					Debug.Log(sir.name + " " + fluids.Count);
+					fluids.Add(liquid.GetComponent<LiquidSimulator>().fluid);
+					amounts.Add((float)0);
+					colors.Add(Color.white);
+				}
+				int i = fluids.IndexOf(liquid.GetComponent<LiquidSimulator>().fluid);
+				float a = (float)amounts[i];
+				float sa = (float)substance.amount[(int)substanceType.Liquid];
+				Color c = (Color)colors[i];
+				Debug.Log(" a" + a + " " + c.r + " " + c.g + " " + c.b + " ");
+				Debug.Log(" sa" + sa + " " + (float)substance.color[0] + " " + substance.color[1] + " " + substance.color[2] + " ");
+				amounts[i] = a + sa;
+				colors[i] = new Color((float)(a * c.r + sa * substance.color[0]) / (a + sa), (float)(a * c.g + sa * substance.color[1]) / (a + sa), (float)(a * c.b + sa * substance.color[2]) / (a + sa), 1.0f);
+			}
+		}
+		foreach (GameObject fluid in fluids)
+		{
+			Color c = (Color)colors[fluids.IndexOf(fluid)];
+			Debug.Log(c.r + " " + c.g + " " + c.b + " ");
+			fluid.GetComponent<Obi.ObiParticleRenderer>().particleColor = (Color)colors[fluids.IndexOf(fluid)];
+		}
 	}
+
+
 }

@@ -3,27 +3,26 @@
     using UnityEngine;
 
     public class PipeTrigger : MonoBehaviour {
-
-        public bool doPresentation = false;
+        
         public bool isGood = true;
-        [HideInInspector]
-        public bool airComing = false;
 
         void OnTriggerEnter(Collider other)
         {
-            if ((airComing || doPresentation) && isGood && other.name == "bottle")
+            if (isGood && other.name == "bottle")
             {
-                Bottle bottle = other.GetComponent<Bottle>();
-                bottle.StartCollecting();
+                AirTransmit thisAir = transform.GetComponent<AirTransmit>(),
+                            otherAir = other.transform.GetComponent<AirTransmit>();
+                AirTransmit.Connect(thisAir, otherAir);
             }
         }
 
         void OnTriggerExit(Collider other)
         {
-            if ((airComing || doPresentation) && isGood && other.name == "bottle")
+            if (isGood && other.name == "bottle")
             {
-                Bottle bottle = other.GetComponent<Bottle>();
-                bottle.StopCollecting();
+                AirTransmit thisAir = transform.GetComponent<AirTransmit>(),
+                            otherAir = other.transform.GetComponent<AirTransmit>();
+                AirTransmit.Disconnect(thisAir, otherAir);
             }
         }
     }
