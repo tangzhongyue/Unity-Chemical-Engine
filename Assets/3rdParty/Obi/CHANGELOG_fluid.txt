@@ -1,0 +1,149 @@
+# Change Log
+All notable changes to “Obi - Advanced fluids for Unity” will be documented in this file.
+
+## [3.4]
+
+### Added
+- Added particle anisotropy. Fluid particles are no longer round, they can adapt to the shape of their neighborhood.
+- Perspective-correct particle rendering.
+- ObiParticleRenderer now supports custom shaders for rendering.
+
+### Fixed
+- Bug that required to disable and re-enable ObiParticleRenderer when moving the actor to a new solver.
+- Bug that caused twitching when performing more than 1 physics step per frame when using handles.
+
+## [3.3.1]
+
+### Fixed
+- Removed unused variable warnings introduced in 3.3
+- Fixed null ref exception when creating a new distance field asset.
+- Fixed crash when using multiple solvers in different update modes.
+- Fixed some sample scenes lacking collision due to missing distance field.
+
+## [3.3]
+
+### Added
+- Support for 2D rigidbody coupling has been brought back.
+- Added substepping to the core solver. This allows to update each solver at a different effective frequency, and decouple the Obi 
+  physics loop from Unity’s.
+- New implementation of fine-grained parallel tasks in core solver, that boosts performance up to x1.5.
+- Support for a new collision primitive: distance fields.
+- Initial particle color for emitter shapes. Each emitter shape can now influence the color of particles being emitted trough it.
+- ObiCollider automatically creates ObiRigidbody component if needed when reparenting it.
+- Helper script (ObiKinematicVelocities) that calculates angular and linear velocities for kinematic rigidbodies that are transformed around. Useful for continuous collision detection and friction effects against objects that are being moved around using their transform instead of forces.
+
+### Changed
+- Emitter shapes now need a reference to the ObiEmitter they are attached to. This allows to have more than one shape per emitter, which enables the creation of complex compound emitter shapes using several simpler ones.
+- Near-zero garbage generation for OnCollision and ObFluidUpdated solver events.
+- Removed SupportsAllSamplingMethods() from ObiEmitterShape. Separated old SamplingMethod enum in two enums: SamplingMethod and EmissionMode. SamplingMethod can have different values depending on the shape used, EmissionMode is part of the emitter and has two values: Stream and Burst.
+- Constraints.GetBatches() now returns an IEnumerable. This means it cannot be accesed by index. There’s a helper method GetFirstBatch() that returns
+the correctly typed first batch, or null if there’s none.
+
+### Fixed
+- solver.particleToActor wasn’t being correctly updated when killing particles in a emitter. This caused random particles to disappear when setting their life to zero, using particleToActor to retrieve their indices.
+- Null reference exception in pin constraints when visualization is enabled.
+- Bug that caused asleep particles to miss collisions upon reactivation.
+
+## [3.2]
+### Added
+- Support for CapsuleCollider2D.
+- Cloudiness control for the DieletricFluid shader.
+
+### Changed
+- Colliders/rigidbodies are no longer copied over to the C++ library each frame. Instead, only colliders that have their transform or any collision-related property altered are copied to the solver. This greatly improves performance when many colliders are present, and greatly reduces memory allocation and GC activity.
+- AllocateParticles() and FreeParticles() have been merged with AddActor() and RemoveActor() respectively. A new per-particle array “particleToActor” makes it faster and easier to know which actor a particle belongs to.
+
+### Removed
+- ObiCollisionGroup has disappeared. It is no longer necessary to manually add colliders to a group, instead each ObiSolver automatically picks up all ObiColliders in a given layer.
+- MeshColliders are now always treated as two-sided thin concave meshes. Solid and one-sided modes have disappeared.
+
+### Fixed
+- Android issue that prevented some devices from finding the Oni library.
+- Removed redundant menu items.
+
+## [3.1.1]
+### Changed
+- Installation is no longer required. Obi now works right out of the box, so the installation window has been removed, and the “Editor default resources” and “Gizmos” folders removed.
+- Particle renderer is now much faster and also allocates less memory.
+
+### Fixed
+- Fluid refraction vertical flipping on Windows, in certain combinations of antialiasing / HDR.
+- Fixed orthographic projection depth testing on Windows.
+
+## [3.1]
+### Added
+- You can now choose where should the solver be updated: FixedUpdate, AfterFixedUpdate, or LateUpdate.
+- Support for triggers. A trigger collider will generate contact constraints, but won´t enforce them.
+- Contact structs returned by the OnCollision event now include the contact tangent and bitangent vectors.
+
+### Fixed
+- Got rid of warnings related to obsolete platform enums in sample scripts.
+- Potential bug in GCHandle deallocation affecting upcoming Unity versions (thanks to the guys at Unity for pointing me at this)
+
+### Changed
+- Faster and more accurate rigidbody impulse application, which results in better collision resolution.
+- ObiColliderGroup’s Colliders and Colliders2D properties are now plain arrays: “colliders” and “colliders2D”.
+- Greatly reduced ParticleAdvector’s memory allocation.
+- ObiParticleRenderer memory allocation has been greatly reduced, and its performance improved.
+
+## [3.0.2]
+### Added
+- Support for iOS simulator.
+- Faster collision contact generation.
+
+### Fixed
+- Fixed memory alignment issue that could potentially cause a crash in 32 bit standalone projects.
+
+## [3.0.1] - 2017-10-20
+
+### Added
+- Cube emitter shape.
+- Flat/unlit fluid shader.
+
+### Changed
+- Performance improvement in mesh colliders and edge colliders.
+
+### Fixed
+- Added support for reverse zbuffer. In Unity 5.5 and newer, fluid wasn´t correctly occluded by scene objects and drawn on top of everything.
+- Bug that caused ObiParticleRenderer to ignore camera culling mask, and render in all cameras.
+- Bug that caused a crash under certain conditions in 32 bit systems.
+- Fixed collision stabilization bug that caused particles to sink slightly when over a dynamic rigidbody.
+
+## [3.0] - 2017-10-08
+
+#IMPORTANT: 3.x is not backwards-compatible with 1.x, so before upgrading make a backup of your existing Obi Fluid projects. You´ll have to re-adjust your solver/material properties once they're upgrade to 3.x.
+
+### Added
+- Welcome window with automatic installer.
+- Upgraded constraint projection to XPBD (extended position-based dynamics). This decouples stiffness and damping from the amount of iterations.
+- Density contrast formulation for accurate multiphase simulations.
+- Slight increase in particle renderer performance.
+- Optional local-space simulation, for better numerical accuracy in large-scale worlds and greater control.
+- Custom multithreading profiler, that allows to fine-tune performance.
+- Image emitter shape, which allows to emit particles using a texture as source.
+- Faster multithreaded particle advection.
+
+### Fixed
+- Inaccurate pressure evaluation that caused instabilities at low iteration counts.
+- Bug in hierarchical grid update that caused a crash in some cases when a hash key collision happened.
+- Bug in continuous collision detection that caused particles to be pushed to the other side of very thin objects.
+- Bug in ray/bounding box intersection test caused by non-IEEE754 compliant SSE division by zero.
+
+### Changed
+- Emitter fluid materials now use a “resolution” parameter to control particle size.
+- Removed “relaxation factor” parameter from emitter materials.
+- Simplified all emitter shape parameters, burst size and emission rate are now automatically controlled by material resolution. 
+- Fluid renderer now supports custom materials and shaders.
+- Actor particle limit is no longer 16384 but 65536, matching Unity’s own vertex limit.
+- 1-frame delay between particle and rigid body physics, collision constraints.
+
+## [1.0.1] - 2016-08-08
+
+### Added
+- Welcome window with automatic installer.
+- Slight increase in particle renderer performance.
+- Info label in emitter material editor that shows per-particle mass for current density and rest distance.
+
+
+## [1.0.0] - 2016-08-08
+- Initial release.
