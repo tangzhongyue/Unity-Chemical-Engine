@@ -27,4 +27,15 @@ public class Substance : MonoBehaviour {
             other.gameObject.GetComponent<ReactionSystem>().AddReactant(gameObject);
         }
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        //Debug.Log(other.gameObject.name);
+        if (other.gameObject.GetComponent<ReactionSystem>() != null)
+        {
+            //Debug.Log("hah");
+            float amount = other.gameObject.GetComponent<ReactionSystem>().RemoveReactant(gameObject);
+            gameObject.GetComponent<Substance>().amount = amount;
+        }
+    }
 }
