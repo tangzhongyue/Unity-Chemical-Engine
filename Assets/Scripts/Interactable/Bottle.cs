@@ -34,7 +34,6 @@
                 TipBoard.Progress(4, 1);
             }
             transform.Find("bottleWaterUp").localScale = new Vector3(1f, height, 1f);
-            TipBoard.Progress(4, 0);
         }
 
         // Update is called once per frame
