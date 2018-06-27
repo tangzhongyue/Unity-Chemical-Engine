@@ -11,6 +11,7 @@
             Dropper dropper = other.GetComponent<Dropper>();
             if (dropper)
             {
+                //Debug.Log("enter " + dropper.name);
                 dropper.inTube = true;
                 dropper.tubeWaterGo = gameObject;                
             }
@@ -21,6 +22,7 @@
             Dropper dropper = other.GetComponent<Dropper>();
             if (dropper)
             {
+                //Debug.Log("exit " + dropper.name);
                 dropper.inTube = false;
             }
         }

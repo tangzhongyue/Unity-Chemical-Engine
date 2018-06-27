@@ -30,6 +30,8 @@
             GetComponent<Fire>().SetFire();
             transform.Find("Flames").GetComponent<UCE_Heatable>().SetFire();
             onFire = true;
+            TipBoard.Progress(0, 1);
+            TipBoard.Progress(5, 1);
         }
 
         public void PutOutFire()
