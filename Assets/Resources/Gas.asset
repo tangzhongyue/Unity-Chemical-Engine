@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolution: 100
   restDensity: 10000
-  smoothing: 1
+  smoothing: 2.5
   viscosity: 0
   surfaceTension: 0
-  buoyancy: 0.1
+  buoyancy: 0.2
   atmosphericDrag: 80
-  atmosphericPressure: 8
+  atmosphericPressure: 5
   vorticity: 0.2

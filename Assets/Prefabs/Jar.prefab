@@ -55,8 +55,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1999921220104100}
   m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
-  m_LocalPosition: {x: 5.287, y: -3.337, z: 6.105}
-  m_LocalScale: {x: 2.618699, y: 2.618698, z: 2.618698}
+  m_LocalPosition: {x: -0.372, y: 1.314, z: -0.26}
+  m_LocalScale: {x: 0.42864183, y: 0.42864138, z: 0.42864138}
   m_Children:
   - {fileID: 4790783650073596}
   m_Father: {fileID: 0}
@@ -194,4 +194,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542e057dc026b1a4ba95aba03b6c154b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  genNum: 200
+  genNum: 20

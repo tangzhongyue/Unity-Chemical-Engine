@@ -49,6 +49,7 @@
                 volume = originalPressure / (float)UCE_Global.env_pressure;
                 //Debug.Log("UPressure: volume " + volume.ToString());
                 UpdateModel();
+                GameObject.Find("gasModel").GetComponent<ReactionSystem>().environmentPressure = (double)UCE_Global.env_pressure;
             }
         }
 
@@ -65,7 +66,7 @@
                 lid.localPosition = new Vector3(lid.localPosition.x, ypos, lid.localPosition.z);
                 gas.localScale = new Vector3(1, volume, 1);
             }
-            gasMat.color = volume < 1f ? originalColor : originalColor / volume;
+            //gasMat.color = volume < 1f ? originalColor : originalColor / volume;
         }
     }
 }
