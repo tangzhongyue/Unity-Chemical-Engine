@@ -13,6 +13,7 @@
                 AirTransmit thisAir = transform.GetComponent<AirTransmit>(),
                             otherAir = other.transform.GetComponent<AirTransmit>();
                 AirTransmit.Connect(thisAir, otherAir);
+                TipBoard.Progress(4, 0);
             }
         }
 
