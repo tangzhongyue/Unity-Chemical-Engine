@@ -31,7 +31,7 @@
   </O2>
   
   <H2 type="gas">
-    <color>255:255:255:0</color>
+    <color>255:255:255:255</color>
   </H2>
 
     <Cl2 type="gas">
@@ -93,7 +93,7 @@
       <color>255:255:255:255</color>
     </C5H11O5COOH>
     
-    <H2SO4 type="solid">
+    <H2SO4 type="liquid">
       <color>255:255:255:255</color>
       <reactionTag>CXX_KClO3</reactionTag>
     </H2SO4>
@@ -192,7 +192,7 @@
       <tempConstant>0.1</tempConstant>
       <reactant type="solid" rate="3">C5H11O5CHO</reactant>
       <reactant type="solid" rate="1">KClO3</reactant>
-      <reactant type="solid" rate="0">H2SO4</reactant>
+      <reactant type="liquid" rate="0">H2SO4</reactant>
       <product type="solid" rate="3">C5H11O5COOH</product>
       <product type="solid" rate="3">KCl</product>
     </CXX_KClO3>

@@ -20,6 +20,8 @@ public class ReactionPhenomena : MonoBehaviour {
 		foreach (GameObject solid in solids)
 		{
 			solid.transform.localScale *= scaleRate;
+			solid.GetComponent<MeshRenderer>().material.color = new Color(substance.color[0], substance.color[1], substance.color[2], 1);
+			Debug.Log((float)substance.color[0] + " " + substance.color[1] + " " + substance.color[2] + " ");
 		}
 	}
 
@@ -38,6 +40,9 @@ public class ReactionPhenomena : MonoBehaviour {
 			GameObject gasCreater = (GameObject)substance.gasCreater[gass.IndexOf(gas)];
 			if (gasCreater != null)
 			{
+				Debug.Log("gascolor"+substance.color[0] + "  " + substance.color[1] + " " + substance.color[2]);
+				gas.GetComponent<Bubbles>().setGasColor(new Color(substance.color[0], substance.color[1], substance.color[2], 1));
+
 				gas.GetComponent<Bubbles>().MoveEimtter(gasCreater.transform.position);
 				gas.GetComponent<Bubbles>().Emit(reactionAmount);
 			}
@@ -74,9 +79,12 @@ public class ReactionPhenomena : MonoBehaviour {
 	}
 
 	public void DrawPhenomena(Dictionary<string, substanceInfo> substances, reactionInfo rctInfo, Dictionary<string, float> reactionAmounts) {
+		
 		ArrayList liquids = new ArrayList();
 		foreach (substanceInfoOfReaction sir in rctInfo.reactants)
 		{
+			Debug.Log(sir.name);
+
 			if (sir.type == substanceType.Liquid) {
 				liquids.Add(sir);
 			}
@@ -84,6 +92,8 @@ public class ReactionPhenomena : MonoBehaviour {
 		}
 		foreach (substanceInfoOfReaction sir in rctInfo.products)
 		{
+			Debug.Log(sir.name);
+
 			if (sir.type == substanceType.Liquid)
 			{
 				liquids.Add(sir);
@@ -116,8 +126,8 @@ public class ReactionPhenomena : MonoBehaviour {
 				float a = (float)amounts[i];
 				float sa = (float)substance.amount[(int)substanceType.Liquid];
 				Color c = (Color)colors[i];
-				Debug.Log(" a" + a + " " + c.r + " " + c.g + " " + c.b + " ");
-				Debug.Log(" sa" + sa + " " + (float)substance.color[0] + " " + substance.color[1] + " " + substance.color[2] + " ");
+				//Debug.Log(" a" + a + " " + c.r + " " + c.g + " " + c.b + " ");
+				//Debug.Log(" sa" + sa + " " + (float)substance.color[0] + " " + substance.color[1] + " " + substance.color[2] + " ");
 				amounts[i] = a + sa;
 				colors[i] = new Color((float)(a * c.r + sa * substance.color[0]) / (a + sa), (float)(a * c.g + sa * substance.color[1]) / (a + sa), (float)(a * c.b + sa * substance.color[2]) / (a + sa), 1.0f);
 			}
@@ -125,7 +135,7 @@ public class ReactionPhenomena : MonoBehaviour {
 		foreach (GameObject fluid in fluids)
 		{
 			Color c = (Color)colors[fluids.IndexOf(fluid)];
-			Debug.Log(c.r + " " + c.g + " " + c.b + " ");
+			//Debug.Log(c.r + " " + c.g + " " + c.b + " ");
 			fluid.GetComponent<Obi.ObiParticleRenderer>().particleColor = (Color)colors[fluids.IndexOf(fluid)];
 		}
 	}
