@@ -219,7 +219,7 @@ public class ReactionSystem : MonoBehaviour
 			reactionInfo rctInfo = reactions[rTag];
 			//Debug.Log(rTag + "1");
 			if (environmentTemperature < rctInfo.startTemperature)
-				break;
+				continue;
 			//Debug.Log(rTag + "2");
 			//deterine if a single reaction can still react
 			bool isSingleReactionReacting = true;
@@ -290,7 +290,7 @@ public class ReactionSystem : MonoBehaviour
 			//if there are still reacting, set true
 			isReacting = true;
 			Debug.Log(reactInfo);
-			//DrawSystem.GetComponent<ReactionPhenomena>().DrawPhenomena(substance, rctInfo, reactionAmounts);
+			DrawSystem.GetComponent<ReactionPhenomena>().DrawPhenomena(substance, rctInfo, reactionAmounts);
 
 		}
 		//foreach (string tmpR in endReaction)
@@ -315,6 +315,7 @@ public class ReactionSystem : MonoBehaviour
 		if (t != null)
 		{
 			new_obj.transform.position = new Vector3(t.position.x, t.position.y, t.position.z);
+			Debug.Log(new_obj.transform.position +" "+ t.position);
 			if (type == substanceType.Liquid)
 			{
 				new_obj.transform.rotation = t.rotation;
@@ -386,21 +387,21 @@ public class ReactionSystem : MonoBehaviour
 			{
 				case substanceType.Solid:
 					{
-						GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.gameObject.transform, null, null, substance[product.InnerText].color);
+						GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.transform, null, null, substance[product.InnerText].color);
 						substance[product.InnerText].objects[type_tmp].Add(new_obj);
 						break;
 					}
 				case substanceType.Liquid:
 					{
 						if (substance[product.InnerText].objects[type_tmp].Count == 0) { 
-							GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.gameObject.transform, this.gameObject.GetComponent<MeshFilter>().mesh, this.gameObject.GetComponent<MeshRenderer>().material, substance[product.InnerText].color);
+							GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.transform, this.GetComponent<MeshFilter>().mesh, this.GetComponent<MeshRenderer>().material, substance[product.InnerText].color);
 							substance[product.InnerText].objects[type_tmp].Add(new_obj);
 						}
 						break;
 					}
 				case substanceType.Gas:
 					{
-						GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.gameObject.transform, null, null, substance[product.InnerText].color);
+						GameObject new_obj = CreateNewSubstance((substanceType)type_tmp, this.transform, null, null, substance[product.InnerText].color);
 						substance[product.InnerText].objects[type_tmp].Add(new_obj);
 						substance[product.InnerText].gasCreater.Add(gasCreater);
 						break;
