@@ -7,7 +7,7 @@
     {
         public enum ChemicalType : int
         {
-            HCL, CU, CUCL2, H2O, H2O2, O2,
+            HCL, CU, CUCL2, H2O, H2O2, O2, H2SO4
         }
 
         [System.Serializable]
