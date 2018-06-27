@@ -18046,7 +18046,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1946247046}
-  m_Text: Fe
+  m_Text: K<size=40>2</size>MnO<size=40>4</size>(0.3mol)
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1

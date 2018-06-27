@@ -79,7 +79,8 @@
                     OnTriggerExit(other);
                 }
                 myObject = AllocateText();
-                SetText(myObject, showName);
+                // FINAL-TODO
+                SetText(myObject, showName + "(1mol)");
                 show = true;
             }
         }
